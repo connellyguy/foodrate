@@ -1,0 +1,17 @@
+# OakRank
+
+Item-level food rating app. Rate individual dishes, not restaurants.
+
+- **Product doc:** [docs/PRODUCT.md](docs/PRODUCT.md) — read this before making architectural or feature decisions
+- **Architecture doc:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — tech stack, key decisions, and scale triggers
+- **Domain:** oakrank.app
+- **MVP market:** Raleigh, NC only
+- **Platform:** Native app (primary), mobile web (secondary)
+- **MVP categories:** 20 food categories (see product doc for full list)
+
+## Key Constraints
+
+- The rating flow must complete in under 10 seconds — protect this at all costs
+- MVP is Raleigh-only but architecture should not hardcode a single market
+- Attribute tags are user-selected (not NLP-extracted) in MVP
+- No social features, gamification, or restaurant owner features in MVP
