@@ -5,90 +5,36 @@
 ## Screen Map
 
 ```
-Home
-├── Search → Restaurant View → Item Detail
-├── Category Leaderboard → Item Detail
-├── [Rate button] → Rating Flow
-└── Profile (tab) → My Ratings → Item Detail
+Browse (tab, default) → Category Leaderboard → Item Detail
+                       → Top Rated → Item Detail
+Search (tab, search role) → Restaurant View → Item Detail
+                          → Item Detail
+Rate (tab) → Rating Flow (modal)
+Profile (tab) → My Ratings → Item Detail
 ```
 
 ## Navigation
 
-Bottom tab bar with 3 tabs: **Home**, **Rate** (center, prominent), **Profile**.
+Native platform tab bar via Expo Router `NativeTabs` (`UITabBarController` on iOS, Material bottom navigation on Android). On iOS 26+, the tab bar renders with Apple's Liquid Glass treatment automatically. 4 tabs:
 
-Search is a bar at the top of Home, not a separate tab.
+1. **Browse** (grid/compass icon) — the default/home tab
+2. **Search** (magnifying glass icon, search role) — on iOS 26, renders as a separated circle that morphs into a bottom search field when tapped. On Android, navigates to the Search screen.
+3. **Rate** (plus icon, brand-colored) — opens the Rating Flow as a full-screen modal. Auth gate if not signed in.
+4. **Profile** (person icon) — user profile and rating history
 
 ---
 
-## 1. Home / Explore
+## Detailed Screen Specs
 
-The entry point. Two clear paths presented immediately:
+Full component lists, entry/exit points, user paths, and edge cases for each screen:
 
-- **"I'm at a restaurant"** — location-aware restaurant search (autocomplete)
-- **"I want [category]"** — grid/list of 20 food categories leading to leaderboards
-
-Below the two entry paths: trending items or top-rated nearby as lightweight discovery. Not a feed — a launcher.
-
-## 2. Search
-
-Activated from the search bar on Home. Full-screen overlay with location-aware autocomplete.
-
-- Searches both restaurants and items in a unified result list
-- Results grouped: "Restaurants" section, "Items" section
-- Recent searches shown before typing
-- Tapping a restaurant → Restaurant View; tapping an item → Item Detail
-
-## 3. Restaurant View
-
-Shows a single restaurant's rated items, ranked by score.
-
-- Restaurant name, address, distance
-- List of rated items sorted by rating (highest first)
-- Each item row: item name, category tag, star rating, number of ratings, top attribute tags (e.g., "crispy," "generous portion")
-- Tapping an item → Item Detail
-- "Rate something here" CTA if user hasn't rated at this restaurant
-
-## 4. Category Leaderboard
-
-"Best Wings in Raleigh" — a ranked list of items across all restaurants within one category.
-
-- Category name as header (e.g., "Wings in Raleigh")
-- Attribute filter chips at the top (e.g., "crispy," "bone-in," "extra spicy") — tapping filters the list
-- Ranked list of items: rank number, item name, restaurant name, star rating, rating count, top attributes
-- Tapping an item → Item Detail
-
-## 5. Item Detail
-
-The proof screen — shows *why* something is rated the way it is.
-
-- Item name, restaurant name, category
-- Aggregate star rating (large) + total rating count
-- Attribute tag breakdown: horizontal bars showing percentage of raters who selected each tag (e.g., "Crispy — 82%", "Generous portion — 64%")
-- Photo grid (user-submitted photos)
-- Individual rating cards: user avatar, star rating, attribute tags they selected, photo if any, timestamp
-- "Rate this item" CTA
-
-## 6. Rating Flow
-
-Single screen with progressive disclosure. Not a multi-step wizard.
-
-1. **Restaurant** — pre-filled if coming from a Restaurant View, otherwise location-aware autocomplete
-2. **Item** — autocomplete filtered by restaurant's known menu; option to add new item with category selection
-3. **Star rating** — 1–5 stars, single tap
-4. **Attribute tags** — pre-defined per category, multi-select chips (optional, but visible and easy)
-5. **Photo** — camera/gallery button (optional)
-6. **Submit button**
-
-All steps visible on one scrollable screen. Completing steps 1–3 enables submit; steps 4–5 are visible but clearly optional. Target: under 10 seconds for steps 1–3.
-
-## 7. Profile / My Ratings
-
-- User's display name and avatar
-- Total ratings count, category breakdown (e.g., "42 ratings — 12 wings, 8 burgers, …")
-- Rating history: reverse-chronological list of the user's ratings
-- Each row: item name, restaurant name, star rating, attribute tags, timestamp
-- Tapping a rating → Item Detail
-- Sign out and account management at the bottom
+1. [Browse](screens/01-home-explore.md)
+2. [Search](screens/02-search.md)
+3. [Restaurant View](screens/03-restaurant-view.md)
+4. [Category Leaderboard](screens/04-category-leaderboard.md)
+5. [Item Detail](screens/05-item-detail.md)
+6. [Rating Flow](screens/06-rating-flow.md)
+7. [Profile / My Ratings](screens/07-profile.md)
 
 ---
 

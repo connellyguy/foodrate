@@ -52,22 +52,22 @@ No existing platform solves this problem well. The landscape rates restaurants, 
 | 2 | Burgers | patty style, bun, cheese, cook temp |
 | 3 | BBQ | smoke, bark, sauce style, wood, tenderness |
 | 4 | Wings | sauce, crispiness, size, bone-in vs boneless |
-| 5 | Fried Chicken | crispiness, juiciness, seasoning, spice |
+| 5 | Fried Chicken | crispiness, juiciness, seasoning, spice, heat level |
 | 6 | Tacos | tortilla, meat, salsa, authenticity |
-| 7 | Breakfast Biscuits | flakiness, butter, fillings, scratch-made |
-| 8 | Mac and Cheese | cheese blend, creaminess, crust, add-ins |
-| 9 | Pulled Pork Sandwich | smoke, slaw, sauce, bun |
-| 10 | Shrimp and Grits | grits quality, shrimp, sauce, sausage |
-| 11 | Fried Chicken Sandwich | crunch, pickle, bun, spice |
-| 12 | Ramen | broth, noodle, chashu, egg |
-| 13 | Donuts | dough type, glaze, creativity, freshness |
-| 14 | Sushi | freshness, rice, knife work, creativity |
-| 15 | Margaritas | fresh vs mix, tequila, frozen vs rocks, balance |
-| 16 | Bagels | chewiness, crust, boil method |
-| 17 | Hot Dogs | casing snap, toppings, char |
-| 18 | Burritos | tortilla, meat, balance, structural integrity |
-| 19 | Nashville Hot Chicken | heat level, crust, juiciness |
-| 20 | Steak | cut, cook temp, sear, aging |
+| 7 | Burritos | tortilla, meat, balance, structural integrity |
+| 8 | Ramen | broth, noodle, chashu, egg |
+| 9 | Sushi | freshness, rice, knife work, creativity |
+| 10 | Hot Dogs | casing snap, toppings, char |
+| 11 | Mac and Cheese | cheese blend, creaminess, crust, add-ins |
+| 12 | Donuts | dough type, glaze, creativity, freshness |
+| 13 | Fried Chicken Sandwich | crunch, pickle, bun, spice |
+| 14 | Steak | cut, cook temp, sear, aging |
+| 15 | Pho | broth depth, noodle type, protein, garnish bar |
+| 16 | Sandwiches | bread, meat quality, portion, sauce |
+| 17 | Ice Cream | creaminess, flavor creativity, portion, freshness |
+| 18 | Curry | heat level, richness, protein, rice quality |
+| 19 | Pasta | sauce, noodle type, freshness, portion |
+| 20 | Pastries | flakiness, freshness, creativity, butter |
 
 **Core Features:**
 - Rate an item: Restaurant > Item (autocomplete) > 1-5 stars > optional attribute tags > optional photo > done
@@ -90,6 +90,14 @@ No existing platform solves this problem well. The landscape rates restaurants, 
 - NLP review processing (attribute tags are user-selected, not extracted from text)
 - Expansion beyond Raleigh
 - Desktop web experience
+
+## Visual Design Language
+
+OakRank uses **native platform UI controls** and follows each platform's current design language. On iOS 26+, this means Apple's **Liquid Glass** — translucent, glass-like surfaces with dynamic blur, refraction, and tinting. On Android, standard Material Design.
+
+The principle: **look native on every platform, not identical across platforms.** Use `NativeTabs` (Expo Router) for tab bars, native navigation headers, and system controls. These automatically adopt each platform's current look — liquid glass on iOS 26, Material on Android — with zero custom styling.
+
+For OakRank's own content surfaces (cards, sheets, leaderboard rows), use `expo-glass-effect` `GlassView` on iOS 26+ for glass material where it fits. On Android and older iOS, `GlassView` falls back to a standard opaque `View` — this is correct behavior, not a gap to fill.
 
 ## Core UX: The Rating Flow
 
