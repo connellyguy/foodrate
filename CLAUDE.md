@@ -9,6 +9,10 @@ Item-level food rating app. Rate individual dishes, not restaurants.
 - **Platform:** Native app (primary), mobile web (secondary)
 - **MVP categories:** 20 food categories (see product doc for full list)
 
+## Code Standards
+
+Follow the standards in [code-standards/](code-standards/) — formatting, naming, TypeScript, React Native patterns, and accessibility. Enforced via ESLint (`@stylistic/eslint-plugin`) and EditorConfig.
+
 ## Key Constraints
 
 - The rating flow must complete in under 10 seconds — protect this at all costs

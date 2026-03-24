@@ -63,10 +63,10 @@ No item photos in list rows. Photos live on Item Detail. The leaderboard is a sc
 
 | Element | Type | State |
 |---------|------|-------|
-| Browse tab | Grid/compass icon | **Active** if navigated from Browse stack (primary case). |
-| Search tab | Magnifying glass icon (search role) | **Active** if navigated from Search stack. |
-| Rate tab | Plus icon, brand-colored | Opens Rating Flow modal (no pre-fill). |
+| Browse tab | Fork.knife icon | **Active** if navigated from Browse stack (primary case). |
 | Profile tab | Person icon | Inactive. Switches to Profile tab stack. |
+| Rate tab | Plus icon, brand-colored | Opens Rating Flow modal (no pre-fill). |
+| Search tab | Magnifying glass icon (search role) | **Active** if navigated from Search stack. |
 
 ---
 

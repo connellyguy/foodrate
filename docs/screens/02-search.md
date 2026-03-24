@@ -54,10 +54,10 @@ Tapping a result immediately navigates away (pushed onto the Search nav stack).
 
 | Element | Type | State |
 |---------|------|-------|
-| Browse tab | Grid/compass icon | Inactive. Switches to Browse tab. |
-| Search tab | Magnifying glass icon (search role) | **Active**. On iOS 26, morphed into bottom search field. |
-| Rate tab | Plus icon, brand-colored | Inactive. Opens Rating Flow as full-screen modal. |
+| Browse tab | Fork.knife icon | Inactive. Switches to Browse tab. |
 | Profile tab | Person icon | Inactive. Switches to Profile tab stack. |
+| Rate tab | Plus icon, brand-colored | Inactive. Opens Rating Flow as full-screen modal. |
+| Search tab | Magnifying glass icon (search role) | **Active**. On iOS 26, morphed into bottom search field. |
 
 ---
 

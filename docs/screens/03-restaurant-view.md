@@ -53,10 +53,10 @@ Full list rendered — no pagination at Raleigh scale.
 
 | Element | Type | State |
 |---------|------|-------|
-| Browse tab | Grid/compass icon | **Active** if navigated from Browse stack. |
-| Search tab | Magnifying glass icon (search role) | **Active** if navigated from Search stack. |
-| Rate tab | Plus icon, brand-colored | Opens Rating Flow modal (no pre-fill — fresh entry, not contextual). |
+| Browse tab | Fork.knife icon | **Active** if navigated from Browse stack. |
 | Profile tab | Person icon | Inactive. Switches to Profile tab stack. |
+| Rate tab | Plus icon, brand-colored | Opens Rating Flow modal (no pre-fill — fresh entry, not contextual). |
+| Search tab | Magnifying glass icon (search role) | **Active** if navigated from Search stack. |
 
 Active tab reflects which stack the user navigated from.
 

@@ -54,10 +54,10 @@ Reverse-chronological list of every rating.
 
 | Element | Type | State |
 |---------|------|-------|
-| Browse tab | Grid/compass icon | Inactive. Switches to Browse tab stack. |
-| Search tab | Magnifying glass icon (search role) | Inactive. Switches to Search tab. |
-| Rate tab | Plus icon, brand-colored | Opens Rating Flow as full-screen modal. |
+| Browse tab | Fork.knife icon | Inactive. Switches to Browse tab stack. |
 | Profile tab | Person icon | **Active** |
+| Rate tab | Plus icon, brand-colored | Opens Rating Flow as full-screen modal. |
+| Search tab | Magnifying glass icon (search role) | Inactive. Switches to Search tab. |
 
 ### Account Management
 

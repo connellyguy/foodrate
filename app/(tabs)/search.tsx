@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function ProfileScreen() {
+export default function SearchScreen() {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Profile</Text>
-            <Text style={styles.subtitle}>Your ratings and favorites</Text>
+            <Text style={styles.title}>Search</Text>
+            <Text style={styles.subtitle}>Find dishes and restaurants</Text>
         </View>
     );
 }

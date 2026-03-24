@@ -37,10 +37,10 @@ Native platform tab bar (see SCREENS.md Navigation section), persistent across a
 
 | Element | Type | State |
 |---------|------|-------|
-| Browse tab | Grid/compass icon | **Active** |
-| Search tab | Magnifying glass icon (search role) | Inactive. On iOS 26, morphs into bottom search field when tapped. |
-| Rate tab | Plus icon, brand-colored | Inactive. Opens Rating Flow as full-screen modal. |
+| Browse tab | Fork.knife icon | **Active** |
 | Profile tab | Person icon | Inactive. Switches to Profile tab stack. |
+| Rate tab | Plus icon, brand-colored | Inactive. Opens Rating Flow as full-screen modal. |
+| Search tab | Magnifying glass icon (search role) | Inactive. On iOS 26, morphs into bottom search field when tapped. |
 
 ---
 

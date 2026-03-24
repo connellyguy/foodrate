@@ -63,10 +63,10 @@ This is the differentiator. Sits directly under the aggregate rating, above phot
 
 | Element | Type | State |
 |---------|------|-------|
-| Browse tab | Grid/compass icon | **Active** if navigated from Browse stack (Leaderboard or trending cards). |
-| Search tab | Magnifying glass icon (search role) | **Active** if navigated from Search stack. |
-| Rate tab | Plus icon, brand-colored | Opens Rating Flow modal (no pre-fill — fresh entry, not contextual). |
+| Browse tab | Fork.knife icon | **Active** if navigated from Browse stack (Leaderboard or trending cards). |
 | Profile tab | Person icon | **Active** if navigated from Profile → My Ratings. |
+| Rate tab | Plus icon, brand-colored | Opens Rating Flow modal (no pre-fill — fresh entry, not contextual). |
+| Search tab | Magnifying glass icon (search role) | **Active** if navigated from Search stack. |
 
 The active tab reflects which stack the user is in. Only one is active at a time.
 

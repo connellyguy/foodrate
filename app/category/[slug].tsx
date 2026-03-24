@@ -1,19 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { StyleSheet, Text, View } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 
 export default function CategoryScreen() {
-  const { slug } = useLocalSearchParams<{ slug: string }>();
+    const { slug } = useLocalSearchParams<{ slug: string }>();
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Category</Text>
-      <Text style={styles.subtitle}>{slug}</Text>
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Category</Text>
+            <Text style={styles.subtitle}>{slug}</Text>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: "center", justifyContent: "center" },
-  title: { fontSize: 24, fontWeight: "bold" },
-  subtitle: { fontSize: 16, color: "#666", marginTop: 8 },
+    container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+    title: { fontSize: 24, fontWeight: 'bold' },
+    subtitle: { fontSize: 16, color: '#666', marginTop: 8 },
 });

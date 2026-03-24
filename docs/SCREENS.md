@@ -17,10 +17,10 @@ Profile (tab) → My Ratings → Item Detail
 
 Native platform tab bar via Expo Router `NativeTabs` (`UITabBarController` on iOS, Material bottom navigation on Android). On iOS 26+, the tab bar renders with Apple's Liquid Glass treatment automatically. 4 tabs:
 
-1. **Browse** (grid/compass icon) — the default/home tab
-2. **Search** (magnifying glass icon, search role) — on iOS 26, renders as a separated circle that morphs into a bottom search field when tapped. On Android, navigates to the Search screen.
+1. **Browse** (fork.knife icon) — the default/home tab
+2. **Profile** (person icon) — user profile and rating history
 3. **Rate** (plus icon, brand-colored) — opens the Rating Flow as a full-screen modal. Auth gate if not signed in.
-4. **Profile** (person icon) — user profile and rating history
+4. **Search** (magnifying glass icon, search role) — on iOS 26, renders as a separated circle that morphs into a bottom search field when tapped. On Android, navigates to the Search screen.
 
 ---
 
