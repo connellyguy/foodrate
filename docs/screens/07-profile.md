@@ -46,7 +46,7 @@ Reverse-chronological list of every rating.
 | Element | Type | Details |
 |---------|------|---------|
 | Section header | Text + sort control | "My Ratings" with segmented control: Recent (default) / Highest |
-| Rating row (repeated, tappable → Item Detail) | List item | Item name (bold), restaurant name (secondary), 1–5 stars (inline), attribute tag chips (max 3 visible, "+N" overflow), photo thumbnail (40pt, only if photo exists), timestamp (relative <7 days, absolute after). |
+| Rating row (repeated, tappable → Item Detail) | List item | Item name (bold), restaurant name (secondary), sentiment label (e.g., "Loved it"), attribute tag chips (max 3 visible, "+N" overflow), photo thumbnail (40pt, only if photo exists), timestamp (relative <7 days, absolute after). |
 | Empty state | Illustration + CTA | "You haven't rated anything yet." Primary button: "Rate something" → Rating Flow. |
 | Pagination | Infinite scroll | 20 ratings initially, next page on scroll. |
 
@@ -79,7 +79,7 @@ Below rating history. Only visible on scroll to bottom. Low prominence.
 2. Scan rating history list.
 3. Tap a rating row → Item Detail.
 
-The rating history list must load fast. Each row needs enough info (item name, restaurant, stars, tags) to identify what the user is looking for without tapping into every one.
+The rating history list must load fast. Each row needs enough info (item name, restaurant, sentiment, tags) to identify what the user is looking for without tapping into every one.
 
 ---
 
@@ -89,7 +89,7 @@ The rating history list must load fast. Each row needs enough info (item name, r
 |---|--------|-------------|
 | 1 | Filter by category | Tap a category chip → rating history filters in place |
 | 2 | Clear filter | Tap active chip → unfiltered |
-| 3 | Sort by highest | Tap "Highest" toggle → re-sorts by stars descending |
+| 3 | Sort by highest | Tap "Highest" toggle → re-sorts by sentiment descending (Loved → Hated) |
 | 4 | Sort by recent | Tap "Recent" toggle → reverse-chronological |
 | 5 | Rate something (empty state) | Tap CTA → Rating Flow (modal) |
 | 6 | Edit display name | Tap row → inline edit or modal |

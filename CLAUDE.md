@@ -13,6 +13,10 @@ Item-level food rating app. Rate individual dishes, not restaurants.
 
 Follow the standards in [code-standards/](code-standards/) — formatting, naming, TypeScript, React Native patterns, and accessibility. Enforced via ESLint (`@stylistic/eslint-plugin`) and EditorConfig.
 
+## Code Review
+
+After completing non-trivial new code (components, screens, hooks, utilities), spawn the `nit` agent to review it. The nit agent is read-only — it returns findings but does not make changes. The caller (you) implements the fixes. Use `/nit` for on-demand reviews.
+
 ## Key Constraints
 
 - The rating flow must complete in under 10 seconds — protect this at all costs

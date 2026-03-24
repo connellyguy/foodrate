@@ -72,7 +72,7 @@ export type Database = {
             }
             items: {
                 Row: {
-                    avg_rating: number
+                    oakrank_score: number
                     category_id: string
                     created_at: string
                     fts: unknown
@@ -83,7 +83,7 @@ export type Database = {
                     updated_at: string
                 }
                 Insert: {
-                    avg_rating?: number
+                    oakrank_score?: number
                     category_id: string
                     created_at?: string
                     fts?: unknown
@@ -94,7 +94,7 @@ export type Database = {
                     updated_at?: string
                 }
                 Update: {
-                    avg_rating?: number
+                    oakrank_score?: number
                     category_id?: string
                     created_at?: string
                     fts?: unknown
@@ -211,7 +211,7 @@ export type Database = {
                     id: string
                     item_id: string
                     photo_path: string | null
-                    stars: number
+                    sentiment: number
                     updated_at: string
                     user_id: string
                 }
@@ -220,7 +220,7 @@ export type Database = {
                     id?: string
                     item_id: string
                     photo_path?: string | null
-                    stars: number
+                    sentiment: number
                     updated_at?: string
                     user_id: string
                 }
@@ -229,7 +229,7 @@ export type Database = {
                     id?: string
                     item_id?: string
                     photo_path?: string | null
-                    stars?: number
+                    sentiment?: number
                     updated_at?: string
                     user_id?: string
                 }

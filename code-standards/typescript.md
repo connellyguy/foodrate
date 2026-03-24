@@ -18,7 +18,7 @@ type Restaurant = {
     location: GeoPoint;
 };
 
-type RatingInput = Pick<Rating, 'itemId' | 'stars'> & {
+type RatingInput = Pick<Rating, 'itemId' | 'sentiment'> & {
     attributes?: string[];
 };
 

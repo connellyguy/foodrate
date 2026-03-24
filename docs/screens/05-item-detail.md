@@ -26,8 +26,8 @@ The proof screen. Shows *why* something is rated the way it is. Every element bu
 
 | Element | Type | Details |
 |---------|------|---------|
-| Large rating display | Number + star icon | Single number to one decimal (e.g., "4.3"). Visual anchor of the screen. |
-| Star bar visualization | 5 horizontal bars | 5-star through 1-star, each bar proportional to rating count at that level (Amazon-style breakdown). |
+| OakRank Score | Large numeric display | Score on a 0–100 scale (e.g., "87"). Visual anchor of the screen. |
+| Sentiment distribution | 4 horizontal bars | Loved → Hated, each bar proportional to rating count at that level. Labels + percentages (e.g., "Loved it — 72%"). |
 | Total rating count | Text label | e.g., "128 ratings" |
 | "Rate this item" CTA | Primary button | Navigates to Rating Flow with restaurant + item pre-filled. Changes to "Update your rating" if user already rated. |
 
@@ -56,7 +56,7 @@ This is the differentiator. Sits directly under the aggregate rating, above phot
 | Element | Type | Details |
 |---------|------|---------|
 | Section header | Text + sort control | "Ratings" with toggle: Most Recent (default) / Highest / Lowest |
-| Rating card (repeated) | List item | User avatar (small circle, default silhouette), display name (not tappable — no social in MVP), 1–5 stars, attribute tag chips (if any), photo thumbnail (if any, tappable → lightbox), timestamp (relative if <30 days, absolute otherwise). |
+| Rating card (repeated) | List item | User avatar (small circle, default silhouette), display name (not tappable — no social in MVP), sentiment label (e.g., "Loved it"), attribute tag chips (if any), photo thumbnail (if any, tappable → lightbox), timestamp (relative if <30 days, absolute otherwise). |
 | Pagination | Infinite scroll | 10 cards initially, more on scroll. |
 
 ### Tab Bar

@@ -5,7 +5,7 @@
 | What | Convention | Example |
 |------|-----------|---------|
 | Variables, functions, hooks | `camelCase` | `ratingCount`, `useLocation` |
-| React components | `PascalCase` | `RestaurantCard`, `RatingStars` |
+| React components | `PascalCase` | `RestaurantCard`, `SentimentInput` |
 | Types, interfaces | `PascalCase`, no prefix | `Restaurant`, `RatingInput` |
 | Constants (env/config level) | `SCREAMING_SNAKE_CASE` | `API_URL`, `MAX_RATING` |
 | Constants (module level) | `camelCase` | `defaultPageSize`, `ratingCategories` |

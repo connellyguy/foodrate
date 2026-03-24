@@ -70,7 +70,7 @@ No existing platform solves this problem well. The landscape rates restaurants, 
 | 20 | Pastries | flakiness, freshness, creativity, butter |
 
 **Core Features:**
-- Rate an item: Restaurant > Item (autocomplete) > 1-5 stars > optional attribute tags > optional photo > done
+- Rate an item: Restaurant > Item (autocomplete) > sentiment (4-bucket) > optional attribute tags > optional photo > done
 - Browse a restaurant's rated items (ranked)
 - Browse a category leaderboard ("Best Wings in Raleigh")
 - Filter by attribute within a category ("crispiest wings")
@@ -99,6 +99,26 @@ The principle: **look native on every platform, not identical across platforms.*
 
 For OakRank's own content surfaces (cards, sheets, leaderboard rows), use `expo-glass-effect` `GlassView` on iOS 26+ for glass material where it fits. On Android and older iOS, `GlassView` falls back to a standard opaque `View` — this is correct behavior, not a gap to fill.
 
+## Rating Model: 4-Bucket Sentiment
+
+OakRank does not use star ratings. Stars cause grade inflation — everything clusters at 4-4.5 and the signal disappears. Instead, OakRank uses a 4-bucket sentiment model:
+
+| Bucket | Label | Weight | What it means |
+|--------|-------|--------|---------------|
+| 1 | Hated it | -100 | Nobody should order this |
+| 2 | Didn't like it | -50 | I wouldn't order again, but it might suit your taste |
+| 3 | Liked it | +50 | I'd order again, solid choice |
+| 4 | Loved it | +100 | I'd come back specifically for this dish |
+
+**OakRank Score** = weighted average of all ratings, yielding a score from -100 to +100. Displayed publicly as a 0-100 scale (negative scores display as low numbers or "Mixed" label).
+
+Each bucket carries a distinct, actionable signal. The even count forces a choice — no comfortable middle to hide in. The asymmetry between the two negative buckets ("the food is bad" vs. "not my taste") is a distinction star ratings cannot capture.
+
+**Display formats:**
+- **Cards / leaderboards:** OakRank Score (e.g., "87") or a derived recommend label (e.g., "92% would order again")
+- **Item detail:** Full distribution — "72% Loved, 20% Liked, 5% Didn't like, 3% Hated"
+- **Attribute tags** carry the nuance on top of the sentiment signal
+
 ## Core UX: The Rating Flow
 
 The rating flow is the make-or-break interaction. Target: **complete a rating in under 10 seconds.**
@@ -106,7 +126,7 @@ The rating flow is the make-or-break interaction. Target: **complete a rating in
 ```
 1. Select restaurant (location-aware autocomplete)
 2. Select or add item (filtered by category, autocomplete)
-3. Rate 1-5 stars (single tap)
+3. Tap one of 4 sentiment options (single tap)
 4. [Optional] Tap attribute tags (pre-defined per category, multi-select)
 5. [Optional] Add photo
 6. Submit
@@ -118,8 +138,9 @@ No text review required. Text reviews add friction and most users won't write th
 
 1. **Will people rate individual items?** The entire product depends on this. If the rating flow is fast enough, they will — but this is assumption #1 to test.
 2. **Is 20 categories enough breadth?** Too few and users bounce ("my food isn't here"). Too many and data is sparse. 20 is the hypothesis.
-3. **Do attribute tags add enough signal?** If users skip them, we just have star ratings (commodity). If they use them, we have differentiated data.
-4. **Can we seed enough menu data manually?** 100 restaurants x 20 categories = up to 2,000 items. This needs to feel comprehensive enough that users find their restaurant and item without adding it themselves.
+3. **Do attribute tags add enough signal?** If users skip them, we just have sentiment buckets (useful but not differentiated). If they use them, we have uniquely granular data.
+4. **Does the 4-bucket model produce meaningful spread?** If most ratings cluster in "Liked it," we lose the anti-inflation benefit. Watch the distribution curve closely at launch.
+5. **Can we seed enough menu data manually?** 100 restaurants x 20 categories = up to 2,000 items. This needs to feel comprehensive enough that users find their restaurant and item without adding it themselves.
 
 ## Future Considerations (Post-MVP)
 

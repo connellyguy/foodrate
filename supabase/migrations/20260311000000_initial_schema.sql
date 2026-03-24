@@ -110,7 +110,7 @@ create table public.items (
   restaurant_id uuid not null references public.restaurants(id) on delete cascade,
   category_id uuid not null references public.categories(id),
   name text not null,
-  avg_rating numeric(3,2) not null default 0,
+  oakrank_score numeric(5,2) not null default 0,
   rating_count int not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
@@ -119,7 +119,7 @@ create table public.items (
 
 create index idx_items_restaurant on public.items(restaurant_id);
 create index idx_items_category on public.items(category_id);
-create index idx_items_rating on public.items(category_id, avg_rating desc);
+create index idx_items_score on public.items(category_id, oakrank_score desc);
 
 -- FTS: search by item name
 alter table public.items add column fts tsvector
@@ -134,7 +134,7 @@ create table public.ratings (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references public.profiles(id) on delete cascade,
   item_id uuid not null references public.items(id) on delete cascade,
-  stars smallint not null check (stars between 1 and 5),
+  sentiment smallint not null check (sentiment in (-2, -1, 1, 2)),
   photo_path text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
@@ -173,8 +173,15 @@ begin
 
   update public.items
   set
-    avg_rating = coalesce((
-      select round(avg(stars)::numeric, 2)
+    oakrank_score = coalesce((
+      select round(avg(
+        case sentiment
+          when  2 then  100
+          when  1 then   50
+          when -1 then  -50
+          when -2 then -100
+        end
+      )::numeric, 2)
       from public.ratings
       where item_id = target_item_id
     ), 0),

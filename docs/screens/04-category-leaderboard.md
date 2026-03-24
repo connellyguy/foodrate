@@ -38,7 +38,7 @@ Each row (entire row tappable → Item Detail):
 | Rank number | Large bold text | Sequential (1, 2, 3…). Re-numbers when filters change. |
 | Item name | Primary bold text | e.g., "Smoked Wings" |
 | Restaurant name | Secondary muted text | e.g., "Beasley's Chicken + Honey" |
-| Star rating | Stars + numeric | Aggregate rating (e.g., ★★★★☆ 4.2) |
+| OakRank Score | Numeric | Aggregate score (e.g., "87") |
 | Rating count | Tertiary text | e.g., "(38 ratings)" |
 | Top attribute tags | 1–3 small display chips | Most frequently selected attributes. Display only (not filters). |
 | Distance | Tertiary text | e.g., "1.2 mi". Omitted if location unavailable. |

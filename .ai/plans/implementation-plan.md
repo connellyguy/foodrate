@@ -33,15 +33,36 @@
 
 **Goal:** Users can browse and discover. No account required.
 
-- **Design system / component library** — typography, colors, spacing, cards, star display, tag chips, bottom tab bar. Establish the visual language before building screens.
-- **Navigation skeleton** — bottom tabs (Home, Rate, Profile), stack navigators per tab
-- **Home / Explore screen** — category cards, "near you" section (PostGIS), trending items
+### 2a: Design System + Storybook
+
+Set up on-device Storybook (via Expo Router `/storybook` route, dev-only) and build the reusable primitives in isolation before wiring them into screens.
+
+- **Storybook setup** — `@storybook/react-native` v9, `withStorybook()` Metro wrapper, dev-gated `app/storybook.tsx` route. Stories co-located next to components (`ComponentName.stories.tsx`).
+- **Design tokens** — colors (light/dark), typography scale, spacing scale, border radii. Exported as a theme object, consumed via `StyleSheet.create`. No CSS units — RN density-independent pixels only.
+- **Core primitives** (each with stories covering all visual states):
+  - `ScoreDisplay` — read-only OakRank Score (numeric 0–100, size variants)
+  - `SentimentInput` — 4-bucket sentiment selector for the rating flow (Hated/Didn't like/Liked/Loved)
+  - `SentimentLabel` — read-only sentiment badge (e.g., "Loved it") for rating cards and history rows
+  - `SentimentDistribution` — 4 horizontal bars showing sentiment breakdown with percentages
+  - `TagChip` / `TagChipGroup` — attribute tag multi-select (selected, unselected, disabled)
+  - `CategoryCard` — home screen grid item (icon/image, name, item count)
+  - `RestaurantCard` — name, distance, top-rated item preview
+  - `ItemCard` — item name, OakRank Score, tag summary, optional photo
+  - `LeaderboardRow` — rank number, item name, restaurant, score, attribute highlights
+  - `EmptyState` — reusable empty state illustration + message + optional CTA
+
+**This sub-phase is the dependency for every screen. Get it locked before building screens.**
+
+### 2b: Screens
+
+- **Navigation skeleton** — bottom tabs (Home, Rate, Profile, Search), stack navigators per tab *(done)*
+- **Home / Explore screen** — category cards grid, "near you" section (PostGIS), trending items
 - **Search** — restaurant + item autocomplete (Postgres FTS), location-aware results
 - **Restaurant View** — item list ranked by rating, category grouping
 - **Category Leaderboard** — ranked items within a category for Raleigh, attribute filtering
 - **Item Detail** — rating breakdown, attribute tag distribution, photos
 
-**This is the biggest phase. Consider splitting into sub-sprints: navigation + home first, then search, then detail screens.**
+**Split into sub-sprints: home first, then search, then detail screens.**
 
 ---
 
@@ -50,10 +71,10 @@
 **Goal:** Users can rate items. This is the product's core loop.
 
 - **Auth integration** — sign-in gate before rating, seamless return to flow after auth
-- **Rating flow** — the 6-step flow (restaurant → item → stars → tags → photo → submit), optimized for <10s completion
+- **Rating flow** — the 6-step flow (restaurant → item → sentiment → tags → photo → submit), optimized for <10s completion
   - Restaurant autocomplete (location-aware)
   - Item autocomplete with "add new item" fallback
-  - Star input (single tap)
+  - Sentiment input (4-bucket single tap: Hated/Didn't like/Liked/Loved)
   - Attribute tag multi-select (category-specific, optional)
   - Photo capture/upload (optional, Supabase Storage)
 - **Supabase edge function** — rating submission, aggregate recalculation (or trigger-based)

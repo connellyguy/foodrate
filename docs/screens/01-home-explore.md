@@ -27,7 +27,7 @@ All 20 categories visible without a "see all" gate. Grid scrolls as part of the 
 | Element | Type | Details |
 |---------|------|---------|
 | Section header | Bold text | "Top rated near you" (or "Top rated in Raleigh" if location denied) |
-| Item cards | Horizontal scrolling list | 5–8 cards. Each card: item name, restaurant name, star rating (numeric), rating count, category tag pill, photo thumbnail (fallback: category illustration). Tappable → Item Detail. |
+| Item cards | Horizontal scrolling list | 5–8 cards. Each card: item name, restaurant name, OakRank Score (numeric, 0–100), rating count, category tag pill, photo thumbnail (fallback: category illustration). Tappable → Item Detail. |
 
 Ranked by Bayesian average or Wilson score (not raw average). Items with fewer than 3 ratings excluded.
 

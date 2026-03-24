@@ -1,6 +1,6 @@
 # Rating Flow
 
-Single scrollable screen with progressive disclosure. All sections visible at once — "progressive disclosure" works through visual weight, not visibility. Submit enables the moment restaurant + item + stars are set. Target: under 10 seconds for a returning user.
+Single scrollable screen with progressive disclosure. All sections visible at once — "progressive disclosure" works through visual weight, not visibility. Submit enables the moment restaurant + item + sentiment are set. Target: under 10 seconds for a returning user.
 
 ---
 
@@ -43,13 +43,13 @@ Single scrollable screen with progressive disclosure. All sections visible at on
 
 New items are persisted to the database on submit and appear in autocomplete for future users.
 
-### Star Rating
+### Sentiment Selector
 
 | Element | Type | Details |
 |---------|------|---------|
-| Label | Static text | "Rating" |
-| Star row | 5 star icons, centered | Large tap targets (48x48pt minimum). Tap to select 1–5. Brief scale-up animation. |
-| Rating label | Subtle text below stars | After selection: "1: Poor", "2: Below Average", "3: Average", "4: Great", "5: Exceptional". |
+| Label | Static text | "How was it?" |
+| Sentiment buttons | 4 buttons, horizontal row | Large tap targets (minimum 48pt height). Labels: "Hated it", "Didn't like it", "Liked it", "Loved it". Single-select — tap to select, tap again to deselect. Brief scale-up animation on selection. |
+| Sentiment description | Subtle text below buttons | After selection: "Hated it: Nobody should order this", "Didn't like it: Wouldn't order again, but might suit your taste", "Liked it: I'd order again", "Loved it: I'd come back here for this dish". |
 
 **Always visible and enabled**, even before restaurant/item are selected. Input order is not enforced.
 
@@ -75,7 +75,7 @@ Always visible. Visually secondary — smaller type, lighter color.
 
 | Element | Type | Details |
 |---------|------|---------|
-| Submit button | Full-width primary button | "Submit Rating". **Disabled** until restaurant + item + stars all set. Attributes and photo never required. |
+| Submit button | Full-width primary button | "Submit Rating". **Disabled** until restaurant + item + sentiment all set. Attributes and photo never required. |
 | Loading state | Spinner on button | Prevents double-submit. |
 | Error state | Red banner above button | "Something went wrong. Tap to retry." Button re-enables. |
 
@@ -85,7 +85,7 @@ Always visible. Visually secondary — smaller type, lighter color.
 
 ### Duplicate Rating Guard
 
-If the user has already rated this item at this restaurant, an inline warning appears after item selection: "You rated this dish [X] stars on [date]. Submitting will replace your previous rating." Submit label changes to "Update Rating." Previous tags/photo are not pre-filled — user rates fresh.
+If the user has already rated this item at this restaurant, an inline warning appears after item selection: "You rated this dish '[Loved it]' on [date]. Submitting will replace your previous rating." Submit label changes to "Update Rating." Previous tags/photo are not pre-filled — user rates fresh.
 
 ---
 
@@ -96,7 +96,7 @@ If the user has already rated this item at this restaurant, an inline warning ap
 | 1 | Tap Rate tab | 0.5s |
 | 2 | Type 2–3 chars, tap restaurant | 2–3s |
 | 3 | Type 2–3 chars, tap item | 2–3s |
-| 4 | Tap a star | 0.5s |
+| 4 | Tap a sentiment | 0.5s |
 | 5 | Tap Submit | 0.5s |
 
 **Total: ~6–7 seconds.** If entering from Restaurant View or Item Detail with pre-fills, total drops to ~2–3 seconds.
@@ -107,7 +107,7 @@ If the user has already rated this item at this restaurant, an inline warning ap
 
 | Path | Details |
 |------|---------|
-| Add attribute tags | After stars, tap 1–4 chips. Adds 2–4 seconds. |
+| Add attribute tags | After sentiment, tap 1–4 chips. Adds 2–4 seconds. |
 | Add a new item | Tap "+ Add a new dish" → type name → select category → Done. Adds 10–15 seconds. |
 | Add a photo | Tap "Add Photo" → take/select photo → thumbnail appears. Adds 5–15 seconds. |
 
@@ -115,8 +115,8 @@ If the user has already rated this item at this restaurant, an inline warning ap
 
 ## Entry Points
 
-| Source | Restaurant | Item | Stars |
-|--------|-----------|------|-------|
+| Source | Restaurant | Item | Sentiment |
+|--------|-----------|------|-----------|
 | Rate tab | Empty | Disabled | Empty |
 | Restaurant View → "Rate something here" | Pre-filled | Empty (enabled, shows restaurant's items) | Empty |
 | Item Detail → "Rate this item" | Pre-filled | Pre-filled (attribute tags populated) | Empty |
@@ -143,7 +143,7 @@ For all pre-filled entries, fields display as chips. User can clear and change.
 All on a single scrollable view. Nothing hidden behind tabs or accordions.
 
 1. **Restaurant + Item** — full prominence, large inputs. First things the eye hits.
-2. **Star rating** — large, centered, visually dominant. The core action.
+2. **Sentiment selector** — large, centered, visually dominant. The core action.
 3. **Attribute tags** — present but secondary. Smaller chips, lighter colors.
 4. **Photo** — single compact button. Minimal visual footprint.
 5. **Submit** — full-width, high-contrast, anchored at bottom. Always visible (even when disabled).
@@ -156,4 +156,4 @@ When restaurant and item are pre-filled and dropdowns are closed, all sections s
 
 - **No draft persistence in MVP.** If the app is killed, the rating is lost. Acceptable — the flow is fast enough to redo.
 - **No edit-after-submit.** Users cannot edit ratings from this screen. They can re-rate (which replaces the previous rating) via the duplicate guard flow.
-- **Input order is not enforced.** Users can tap stars before selecting a restaurant. The submit button is the gate, not the field sequence.
+- **Input order is not enforced.** Users can tap a sentiment before selecting a restaurant. The submit button is the gate, not the field sequence.

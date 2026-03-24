@@ -38,7 +38,7 @@ Hidden entirely if no restaurants match.
 Each row:
 - **Item name** — bold primary text
 - **Restaurant name** — secondary text (e.g., "at Backyard BBQ Pit")
-- **Star rating** — numeric with star icon (e.g., "4.3 ★")
+- **OakRank Score** — numeric (e.g., "87")
 - **Rating count** — small text (e.g., "18 ratings")
 - **Category tag** — small chip (e.g., "Wings")
 

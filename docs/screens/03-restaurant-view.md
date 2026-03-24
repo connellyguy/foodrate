@@ -34,7 +34,7 @@ Auth prompt triggers on the Rating Flow screen if not signed in — the CTA is a
 
 ### Rated Items List
 
-Sorted by aggregate star rating (highest first). Ties broken by rating count (more ratings wins).
+Sorted by OakRank Score (highest first). Ties broken by rating count (more ratings wins).
 
 Each row (full row is tappable → Item Detail):
 
@@ -42,10 +42,10 @@ Each row (full row is tappable → Item Detail):
 |---------|------|---------|
 | Item name | Bold body text | e.g., "Carolina Reaper Wings" |
 | Category tag | Small pill | e.g., "Wings" |
-| Star rating | Stars + numeric | Aggregate to one decimal (e.g., 4.3) |
-| Rating count | Caption | e.g., "(27)" — inline next to stars |
+| OakRank Score | Numeric | Aggregate score (e.g., "87") |
+| Rating count | Caption | e.g., "(27)" — inline next to score |
 | Top attribute tags | Small chips, max 3 | Top 3 by selection frequency. Remainder visible on Item Detail. |
-| User's own rating indicator | Subtle icon/text | If the current user has rated this item, show a small checkmark or "You: 4★". Helps recall what they've tried. |
+| User's own rating indicator | Subtle icon/text | If the current user has rated this item, show a small checkmark or "You: Loved it". Helps recall what they've tried. |
 
 Full list rendered — no pagination at Raleigh scale.
 
