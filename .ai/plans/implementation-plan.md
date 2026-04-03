@@ -1,97 +1,164 @@
 # OakRank — Implementation Plan
 
-## Phase 0: Foundation (Infrastructure + Tooling)
+## Phase 0: Foundation (Infrastructure + Tooling) ✅
 
 **Goal:** Everything needed before writing app code.
 
 - **Supabase project setup** — create project, enable PostGIS, configure auth providers (email now; Apple + Google Sign-In pre-launch), set up Storage bucket for photos (public, 5MB limit)
-- **Database schema + RLS** — design and migrate the core tables (restaurants, items, categories, ratings, attribute_tags, rating_attributes), write RLS policies from day one
-- **Expo project scaffold** — init with TypeScript, configure EAS Build for iOS/Android/web, set up OTA updates
-- **Shared types** — establish the pattern for sharing TypeScript types between app and Supabase (generated from DB schema or hand-maintained)
-- **CI/CD** — EAS Build + preview deploys, linting, type-checking on PR
+- **Database schema + RLS** — core tables (restaurants, items, categories, ratings, attribute_tags, rating_attributes, markets, profiles), RLS policies from day one
+- **Expo project scaffold** — TypeScript, EAS Build config, environment variables, file-based routing
+- **Shared types** — `supabase gen types` → `src/lib/database.types.ts`
+- **Design system** — design tokens (WCAG AA audited), `useThemeColors` hook, on-device Storybook
+- **Core components** — ScoreDisplay, SentimentInput, SentimentDistribution, TagChip, DistanceBadge, LeaderboardRow, ThemeReference
+- **Navigation skeleton** — bottom tabs (Browse, Rate, Profile, Search), stack navigators, detail routes (restaurant/category/item)
 
-**Blocks nothing except everything after it. Aim to keep this tight — days, not weeks.**
+**Status: COMPLETE.** All items above are built and working.
 
 ---
 
-## Phase 1: Data Seeding Pipeline
+## Phase 1: Admin Seeding + Schema Updates
 
-**Goal:** Populate the database so there's something to browse from day one.
+**Goal:** Bootstrap the app with enough data to feel useful from day one. Admin-driven, not script-driven.
 
-- **Curate restaurant list** — build a spreadsheet of ~100 Raleigh restaurants (name, address, city/state/zip) covering all 20 categories
-- **Geocode addresses** — batch geocode via Nominatim (OSM) or US Census geocoder to get lat/lng (both free, no storage restrictions)
-- **Import script** — CSV/JSON → Supabase insert for restaurant records
-- **Menu curation tooling** — spreadsheet → DB import script for items + category assignments + attribute tag definitions
-- **Seed the 20 categories** with their attribute tag sets
-- **Live restaurant lookup** — wire up a Foursquare or Google API call for the "add a restaurant" flow at runtime (no caching, ToS-compliant)
+### 1a: Schema Updates
 
-**This can run in parallel with Phase 2. The app needs data to be useful, so don't defer it.**
+The pivot from 20 broad categories to 7 seeded + open-ended requires a few schema changes:
+
+- **`categories.featured` column** (boolean, default false) — distinguishes the 7 seeded categories (featured = true) from user-submitted categories. Featured categories get leaderboards and browse-level visibility. Non-featured categories exist on restaurant pages but don't appear in category browse or leaderboards.
+- **Seed the 7 featured categories** — pizza, wings, tacos, ramen, sushi, ice cream, barbecue — with their attribute tag sets
+- **Seed the Raleigh market** record (name, slug, PostGIS point, radius)
+- **`profiles.role` column** (text, default 'user') — supports 'admin' role for owner-only access to the admin page. RLS policy: admin routes check `profiles.role = 'admin'`.
+- **Regenerate types** after migration (`npm run gen-types`)
+
+### 1b: Admin Web App
+
+A separate Vite + Vue 3 web app at `admin/` in the monorepo, deployed to `admin.oakrank.app`. The native app contains zero admin code. Full product definition in [docs/ADMIN.md](../docs/ADMIN.md), implementation plan in [.ai/plans/admin-app.md](admin-app.md).
+
+**Key capabilities:** Full CRUD for restaurants, items, and ratings. Rapid-fire and batch paste item entry. Three-state rating moderation (active/hidden/uncounted). Seeding health dashboard.
+
+**Stack:** Vue 3 + PrimeVue + Supabase (shared backend). Shared types via tsconfig path alias from `src/lib/database.types.ts`.
+
+**Build order (7 phases A-G):** Scaffold + Auth → Restaurant CRUD → Item CRUD + Batch → Rating Seed → Moderation → Dashboard → Deploy. Seeding can begin after Phase C.
+
+### 1c: Data Seeding
+
+With the admin page built, manually seed:
+- Raleigh restaurants covering all 7 featured categories (target: enough restaurants per category that leaderboards show 5–10 ranked items)
+- Menu items per restaurant
+- Seed ratings per item (admin's honest ratings — establishes initial scores)
+- Attribute tags per category (via migration)
+
+**This phase is the critical gate.** The app is useless without data. The admin page makes seeding fast enough to do in a few focused sessions rather than maintaining spreadsheets and import scripts.
 
 ---
 
 ## Phase 2: Core App — Read Path
 
-**Goal:** Users can browse and discover. No account required.
+**Goal:** Users can browse and discover. No account required for reading. Every screen has a confident answer — no dead ends.
 
-### 2a: Design System + Storybook
+### Design Principle: Confidence-First UX
 
-Set up on-device Storybook (via Expo Router `/storybook` route, dev-only) and build the reusable primitives in isolation before wiring them into screens.
+Every screen must handle the "not enough data" case by redirecting to something useful — never show empty states with a shrug. The hierarchy:
 
-- **Storybook setup** — `@storybook/react-native` v9, `withStorybook()` Metro wrapper, dev-gated `app/storybook.tsx` route. Stories co-located next to components (`ComponentName.stories.tsx`).
-- **Design tokens** — colors (light/dark), typography scale, spacing scale, border radii. Exported as a theme object, consumed via `StyleSheet.create`. No CSS units — RN density-independent pixels only.
-- **Core primitives** (each with stories covering all visual states):
-  - `ScoreDisplay` — read-only OakRank Score (numeric 0–100, size variants)
-  - `SentimentInput` — 4-bucket sentiment selector for the rating flow (Hated/Didn't like/Liked/Loved)
-  - `SentimentLabel` — read-only sentiment badge (e.g., "Loved it") for rating cards and history rows
-  - `SentimentDistribution` — 4 horizontal bars showing sentiment breakdown with percentages
-  - `TagChip` / `TagChipGroup` — attribute tag multi-select (selected, unselected, disabled)
-  - `CategoryCard` — home screen grid item (icon/image, name, item count)
-  - `RestaurantCard` — name, distance, top-rated item preview
-  - `ItemCard` — item name, OakRank Score, tag summary, optional photo
-  - `LeaderboardRow` — rank number, item name, restaurant, score, attribute highlights
-  - `EmptyState` — reusable empty state illustration + message + optional CTA
+1. **Enough data?** Show the real content (leaderboard, restaurant items, item detail).
+2. **Not enough data for this specific thing?** Redirect to the nearest high-confidence alternative:
+   - Restaurant with no rated items → show top-rated items nearby in the same categories the restaurant serves
+   - Category with < N items → show the category anyway if we have any data, supplement with "also popular nearby" cross-category suggestions
+   - Search with no results → show trending items and top categories instead of "no results"
+   - Item with very few ratings → show the score but label it "Early" (existing ScoreDisplay "New" badge handles this), show the restaurant's other rated items prominently
 
-**This sub-phase is the dependency for every screen. Get it locked before building screens.**
+This isn't a polish task — it's a core architectural decision. Every query hook and screen needs a fallback data path from day one.
 
-### 2b: Screens
+### 2a: Query Layer
 
-- **Navigation skeleton** — bottom tabs (Home, Rate, Profile, Search), stack navigators per tab *(done)*
-- **Home / Explore screen** — category cards grid, "near you" section (PostGIS), trending items
-- **Search** — restaurant + item autocomplete (Postgres FTS), location-aware results
-- **Restaurant View** — item list ranked by rating, category grouping
-- **Category Leaderboard** — ranked items within a category for Raleigh, attribute filtering
-- **Item Detail** — rating breakdown, attribute tag distribution, photos
+Build the TanStack Query hooks that power all read screens. Each hook returns data shaped for its screen, including fallback content when primary data is sparse.
 
-**Split into sub-sprints: home first, then search, then detail screens.**
+- **`useCategories`** — featured categories for the browse grid (where `featured = true`)
+- **`useLeaderboard(categorySlug)`** — ranked items within a category for the current market, ordered by OakRank score. Minimum rating threshold for inclusion (e.g., ≥ 3 ratings).
+- **`useRestaurant(id)`** — restaurant detail with its items, grouped by category, ordered by score
+- **`useItem(id)`** — item detail with sentiment distribution, rating count, high-confidence attribute tags
+- **`useSearch(query)`** — Postgres FTS across restaurants and items, location-aware ranking
+- **`useNearby(location)`** — top-rated items near the user across all featured categories (PostGIS distance sort)
+- **`useHighConfidenceAttributes(itemId)`** — attribute tags that appear on ≥ N% of an item's ratings. Only these get displayed on item detail — low-frequency tags are stored but hidden.
+
+### 2b: Remaining Components
+
+Build the components needed for screens that aren't yet built. Existing Storybook components (ScoreDisplay, SentimentDistribution, TagChip, DistanceBadge, LeaderboardRow) cover leaderboard and item detail. Still needed:
+
+- **CategoryCard** — browse grid tile (category name, icon, item count)
+- **RestaurantCard** — name, distance, top item preview, score
+- **ItemCard** — item name, restaurant, score, top tags (used in search results, "nearby" lists)
+- **SearchInput** — autocomplete input for restaurants and items
+- **ConfidenceRedirect** — reusable pattern (not necessarily a component) for rendering fallback content when primary data is sparse. Could be a wrapper, a hook, or just a convention — decide during implementation.
+
+Atomic primitives (Button, TextInput, Skeleton, etc.) are built as needed by screens — don't pre-build a full widget library.
+
+### 2c: Screens
+
+- **Browse (Home)** — grid of 7 featured category cards, "Top Rated Near You" section (PostGIS), pulls from `useCategories` and `useNearby`
+- **Category Leaderboard** — ranked list of items in a category for Raleigh. No attribute filtering (deferred). If category has few items, supplement with cross-category top items nearby.
+- **Restaurant Detail** — restaurant info, item list grouped by category and ranked by score. If no items are rated, show "Rate something here!" CTA + nearby top-rated items in the same categories.
+- **Item Detail** — OakRank score, sentiment distribution bar, high-confidence attribute tags, photo gallery, rating count. "Early" badge for low rating counts.
+- **Search** — autocomplete across restaurants and items (Postgres FTS). Location-aware result ranking. No-results state shows trending items and top categories, not an empty screen.
 
 ---
 
 ## Phase 3: Core App — Write Path (Rating Flow)
 
-**Goal:** Users can rate items. This is the product's core loop.
+**Goal:** Users can rate items. This is the product's core loop. Under 10 seconds.
 
-- **Auth integration** — sign-in gate before rating, seamless return to flow after auth
-- **Rating flow** — the 6-step flow (restaurant → item → sentiment → tags → photo → submit), optimized for <10s completion
-  - Restaurant autocomplete (location-aware)
-  - Item autocomplete with "add new item" fallback
-  - Sentiment input (4-bucket single tap: Hated/Didn't like/Liked/Loved)
-  - Attribute tag multi-select (category-specific, optional)
-  - Photo capture/upload (optional, Supabase Storage)
-- **Supabase edge function** — rating submission, aggregate recalculation (or trigger-based)
+### 3a: Auth Integration
 
-**Protect the <10s target ruthlessly. Test on real devices early.**
+- **Email auth** — sign-in / sign-up before first rating, seamless return to the rating flow after auth
+- **Session persistence** — already wired (expo-secure-store), just needs the sign-in UI
+- Apple Sign-In and Google Sign-In are pre-launch additions, not MVP blockers
+
+### 3b: Rating Flow
+
+The 6-step flow, optimized for speed:
+
+1. **Select restaurant** — location-aware autocomplete. "Add new restaurant" fallback if not found (name + address, geocoded).
+2. **Select or add item** — filtered by restaurant, autocomplete. "Add new item" with category assignment. If user adds an item in a non-featured category, it works — it just lives on the restaurant page without a category leaderboard.
+3. **Tap sentiment** — single tap on one of 4 buckets (uses existing SentimentInput component). This is the only required input beyond restaurant + item.
+4. **[Optional] Tap attribute tags** — category-specific tags, multi-select (uses TagChip). These are collected and stored, with high-confidence tags surfaced per-item over time. Quick skip if the user doesn't care.
+5. **[Optional] Add photo** — camera or gallery (expo-image-picker → Supabase Storage). Skip button prominent.
+6. **Submit** — Supabase insert + score recalculation.
+
+### 3c: Score Recalculation
+
+When a rating is submitted, recalculate the item's OakRank score. Use a **Supabase edge function** triggered on rating insert/update/delete — the scoring logic has enough moving parts (neutral prior, early burial protection, dampening) that a Postgres trigger would be awkward to maintain.
+
+The edge function must:
+1. **Fetch all ratings** for the item
+2. **Apply bucket weights:** Hated = -3 (or -2 if early burial protection applies), Disliked = -1, Liked = +1, Loved = +2
+3. **Inject the neutral prior:** 2 virtual "Liked" (+1) votes + 1 virtual "Disliked" (-1) vote, included in the average alongside real votes
+4. **Early burial protection:** if real vote count < early-vote threshold (~5–10, configurable), treat "Hated" as -2 instead of -3
+5. **Compute internal score:** weighted average of (real votes + prior votes)
+6. **Apply vote-count dampening:** scale the internal score toward 0 based on real vote count (low votes → pulled toward center, high votes → full score). Exact curve TBD during implementation.
+7. **Store** the internal signed score and real vote count on the item row
+
+Display-side normalization (internal → 0-10) happens in the app, not in the edge function. The DB stores the raw signed score.
+
+### 3d: "Add New" Flows
+
+When a user adds a restaurant or item that doesn't exist yet:
+- **New restaurant** — name, address required. Geocode via Nominatim. Assign to Raleigh market. Available immediately for rating.
+- **New item** — name, category assignment required. If the user picks a non-featured category (or creates a new one), the item exists on the restaurant page. It doesn't get a leaderboard entry until the category is promoted to featured.
 
 ---
 
 ## Phase 4: Profile + Polish
 
-**Goal:** Users can see their history, and the app feels complete.
+**Goal:** Users can see their history, and the app feels finished.
 
-- **Profile screen** — rating history, stats, edit account
-- **My Ratings** — list with edit/delete capability
-- **Empty states** — every screen needs one (no ratings yet, no results, etc.)
-- **Loading / error states** — skeletons, retry patterns, offline handling
-- **Performance pass** — list virtualization, image optimization, query tuning
+- **Profile screen** — rating history (paginated, most recent first), total rating count, edit display name
+- **My Ratings** — list view with item/restaurant/sentiment/date. Tap to view item detail. Edit or delete a rating.
+- **Loading states** — skeleton screens for all data-loading views (use the Skeleton component pattern)
+- **Error states** — retry patterns for failed queries, offline detection with "check your connection" messaging
+- **Performance pass** — FlatList virtualization on all long lists (leaderboards, search results, rating history), image optimization (Supabase image transforms for thumbnails), query prefetching on likely navigation paths
+- **Accessibility audit** — screen reader pass on all screens, focus order, touch target sizes (48dp minimum)
+
+Note: "empty states" as traditionally defined (no data → sad illustration) are largely replaced by the confidence-first redirect pattern from Phase 2. The Profile screen is the one place a true empty state is needed ("You haven't rated anything yet — find something to rate!").
 
 ---
 
@@ -99,13 +166,18 @@ Set up on-device Storybook (via Expo Router `/storybook` route, dev-only) and bu
 
 **Goal:** App Store-ready, real users can use it.
 
-- **App Store assets** — icon, screenshots, description, privacy policy, terms
+- **App Store assets** — icon, screenshots, description, privacy policy, terms of service
 - **EAS Submit** — configure for iOS App Store + Google Play
 - **Vercel deployment** — Expo web export for mobile web fallback
-- **Analytics** — basic event tracking (ratings submitted, searches, category views) to validate key assumptions
-- **Push notification setup** — Expo Notifications config (even if no triggers yet, wire the plumbing)
-- **Beta test** — TestFlight / internal track, seed with friends in Raleigh
-- **Data QA** — verify seeded restaurants/items are accurate, complete, and well-categorized
+- **Analytics** — basic event tracking to validate key assumptions:
+  - Ratings submitted (overall + per category)
+  - Rating flow completion rate and drop-off step
+  - Category leaderboard views
+  - Search queries (what are people looking for?)
+  - Confidence-redirect events (how often do users hit the fallback path?)
+- **Push notification plumbing** — Expo Notifications config (no triggers yet, just the infrastructure)
+- **Data QA** — verify seeded restaurants/items are accurate, complete, and well-distributed across categories. Ensure every featured category has enough items for a meaningful leaderboard.
+- **Beta test** — TestFlight / internal track, seed with friends in Raleigh. Focus on: does the rating flow feel fast? Do leaderboards feel trustworthy? Do users hit dead ends?
 
 ---
 
@@ -114,10 +186,12 @@ Set up on-device Storybook (via Expo Router `/storybook` route, dev-only) and bu
 | Phase | Dependency | Parallelizable with |
 |-------|-----------|-------------------|
 | 0 — Foundation | None | — |
-| 1 — Data Seeding | Phase 0 (DB) | Phase 2 |
-| 2 — Read Path | Phase 0 | Phase 1 |
-| 3 — Write Path (Rating) | Phase 0 + auth, Phase 2 (navigation) | Phase 1 |
+| 1 — Admin + Seeding | Phase 0 (DB + auth) | Phase 2a (query hooks) |
+| 2 — Read Path | Phase 0 + Phase 1a (schema) | Phase 1c (seeding) |
+| 3 — Write Path (Rating) | Phase 2 (navigation + screens) | Phase 1c (seeding) |
 | 4 — Profile + Polish | Phase 3 | — |
 | 5 — Launch Prep | Phase 4 | — |
 
-The critical path is **0 → 2 → 3 → 4 → 5**, with data seeding (Phase 1) running alongside development. Design system work at the start of Phase 2 is a dependency for all screens — get that locked early.
+**Critical path: 0 → 1a → 2 → 3 → 4 → 5**, with admin page (1b) and data seeding (1c) running alongside Phase 2 screen work.
+
+The tightest dependency is between 1a (schema updates) and 2 (query hooks need the `featured` column and seeded categories to develop against). Get the migration done first, then admin page and read screens can proceed in parallel.

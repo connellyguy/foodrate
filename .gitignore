@@ -46,3 +46,6 @@ coverage/
 
 # Editor
 .vscode-test
+
+*storybook.log
+storybook-static

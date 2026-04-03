@@ -12,7 +12,7 @@ A single theme object exporting colors (light/dark), typography scale, spacing s
 ### Colors
 - **Brand:** primary, primaryLight, primaryDark
 - **Sentiment:** loved (strong positive), liked (positive), disliked (negative), hated (strong negative)
-- **Neutral:** background, surface, textPrimary, textSecondary, textTertiary, border, divider
+- **Neutral:** `neutrals50`–`neutrals900` palette with a subtle warm/beige tint (not cool/blue grays). Mapped to semantic roles: background, surface, textPrimary, textSecondary, textTertiary, border, divider
 - **Semantic:** error, success, warning
 - **Dark mode:** matching set for each
 

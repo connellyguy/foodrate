@@ -18,11 +18,9 @@ You are a builder agent for OakRank, a React Native food rating app built with E
    - `code-standards/react-native.md` — function declarations, StyleSheet.create, import order, state management
    - `code-standards/accessibility.md` — labels, roles, touch targets, contrast
 3. **Find existing patterns.** Before writing a new component, hook, or utility:
-   - Glob `components/` for similar components — match their structure, props patterns, and style organization.
-   - Glob `src/` for existing hooks and utilities — reuse what exists.
-   - Read `constants/Colors.ts` and any other files in `constants/` — use defined tokens, never hardcode colors or theme values.
-   - If design tokens (spacing, typography, radii) exist, use them. Grep for their location if unsure.
-4. **Check for shared code.** Before writing a helper function, search the codebase to see if it already exists. Do not duplicate.
+   - If your prompt includes a `## Context hints` section: read the files referenced there. They contain the patterns and tokens you need. Only search more broadly if the hints don't cover what you need for the task.
+   - If no context hints were provided: Glob `components/` for similar components — match their structure, props patterns, and style organization. Glob `src/` for existing hooks and utilities — reuse what exists. Read `constants/Colors.ts` and any other files in `constants/` — use defined tokens, never hardcode colors or theme values. If design tokens (spacing, typography, radii) exist, use them. Grep for their location if unsure.
+4. **Check for shared code.** Before writing a helper function, search the codebase to see if it already exists. Do not duplicate. If context hints mention relevant utilities, check those first.
 
 ## Stack
 

@@ -41,7 +41,13 @@ You are a code review agent for the OakRank project. You review code and return 
 - Every `Pressable`/touchable needs `accessibilityLabel` and `accessibilityRole`.
 - Every `Image` needs `accessibilityLabel` or `accessible={false}`.
 - Touch targets: 44x44pt minimum.
-- Color contrast: WCAG 2.1 AA (4.5:1 normal, 3:1 large).
+- **Color contrast** (WCAG 2.1 AA — this is a top-level project constraint):
+  - Normal text (< 18pt, or < 14pt bold): **4.5:1** against its background.
+  - Large text (≥ 18pt, or ≥ 14pt bold): **3:1** against its background.
+  - Flag `textTertiary` on any text smaller than `body` size (16px) — verify it passes 4.5:1 against `surface` and `background` in both themes.
+  - Flag `textInverse` (white/dark) on brand or sentiment color backgrounds — verify 4.5:1.
+  - Flag any hardcoded color or opacity reduction on text that could drop below 4.5:1.
+  - Read `code-standards/accessibility.md` for the full token-vs-surface matrix.
 
 ### Over-engineering
 - Flag unnecessary abstractions, premature generalization, excessive error handling for impossible states, and unneeded configuration.

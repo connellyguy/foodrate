@@ -12,6 +12,7 @@
 | Search | Postgres FTS | GIN-indexed; upgrade to Typesense when typo-tolerance or faceted filtering needed |
 | Image storage | Supabase Storage | S3-compatible, CDN-backed, built-in image transformations |
 | Restaurant data | Manual + OSM + live lookup | Seeded manually; geocoded via Nominatim/OSM; live API for new restaurants |
+| Icons | Lucide (`lucide-react-native`) | Tree-shakable SVG icons via `react-native-svg`. 1,500+ outline icons. |
 | Push notifications | Expo Notifications | Wraps FCM/APNs |
 | Hosting (web) | Vercel | Expo web export |
 
@@ -23,7 +24,7 @@
 
 **Postgres FTS over a dedicated search service** — At Raleigh scale (~100 restaurants, ~2,000 items), Postgres handles autocomplete fine. Typesense is the upgrade path when we need typo-tolerance or multi-facet filtering.
 
-**Manual restaurant + menu seeding** — Both Google Places and Foursquare ToS prohibit caching/storing their data on standard developer tiers. For 100 Raleigh restaurants, we manually curate restaurant records (name, address) and geocode via Nominatim/OSM (no storage restrictions under ODbL). Menus are curated from restaurant websites and delivery platforms. A live API call (Foursquare or Google) is used only at runtime for the "add a restaurant not yet in our system" flow — compliant since we display results and only store after user action. Scraping (Apify or custom) is the path for multi-city expansion.
+**Admin-seeded cold start** — An owner-only admin page allows bulk entry of restaurants, menu items, and seed ratings for the 7 launch categories. This replaces the original plan of seeding 100 restaurants across 20 categories — the tighter category list makes manual seeding practical. Both Google Places and Foursquare ToS prohibit caching/storing their data on standard developer tiers, so restaurant records (name, address) are manually curated and geocoded via Nominatim/OSM (no storage restrictions under ODbL). Menus are curated from restaurant websites and delivery platforms. A live API call (Foursquare or Google) is used only at runtime for the "add a restaurant not yet in our system" flow — compliant since we display results and only store after user action. Scraping (Apify or custom) is the path for multi-city expansion.
 
 **RLS enabled from day one** — All tables use row-level security. Policies enforce access at the database level (e.g., anyone reads ratings, only author modifies their own).
 

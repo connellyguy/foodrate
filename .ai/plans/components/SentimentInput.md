@@ -28,7 +28,7 @@ The core rating input. A 4-button selector for the sentiment buckets: Hated it, 
 - 4 buttons in a horizontal row, equal width
 - Unselected: outlined, muted text
 - Selected: filled with sentiment color (from theme.colors.sentiment), white text, brief scale-up animation
-- Each button: emoji or icon + label text vertically stacked
+- Each button: SVG icon + label text vertically stacked (no emoji — icons from vector library, styled to match theme)
 - Minimum 48pt height per button (accessibility requirement)
 - Description text appears below the row after selection
 

@@ -10,8 +10,10 @@ import { useColorScheme } from '@/components/useColorScheme';
 
 export { ErrorBoundary } from 'expo-router';
 
+const storybookEnabled = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true';
+
 export const unstable_settings = {
-    initialRouteName: '(tabs)',
+    initialRouteName: storybookEnabled ? 'storybook' : '(tabs)',
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -51,6 +53,9 @@ function RootLayoutNav() {
                     <Stack.Screen name="restaurant/[id]" options={{ title: 'Restaurant' }} />
                     <Stack.Screen name="category/[slug]" options={{ title: 'Category' }} />
                     <Stack.Screen name="item/[id]" options={{ title: 'Item' }} />
+                    <Stack.Protected guard={__DEV__}>
+                        <Stack.Screen name="storybook" options={{ headerShown: false }} />
+                    </Stack.Protected>
                 </Stack>
             </ThemeProvider>
         </QueryClientProvider>
