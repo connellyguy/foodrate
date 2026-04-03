@@ -88,7 +88,7 @@ Tapping a result immediately navigates away (pushed onto the Search nav stack).
 | # | Source | Trigger |
 |---|--------|---------|
 | 1 | Tab bar | Tap Search tab (accessible from any screen) |
-| 2 | Deep link | `oakrank.app/search?q=wings` — opens with query pre-filled (edge case, not primary MVP flow) |
+| 2 | Deep link | `oakrank.com/search?q=wings` — opens with query pre-filled (edge case, not primary MVP flow) |
 
 ---
 

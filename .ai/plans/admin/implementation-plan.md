@@ -269,7 +269,7 @@ Each phase is usable independently — you can start seeding after Phase 2 witho
 1. `vercel.json` in `admin/` — SPA rewrite config (`rewrites: [{ "source": "/(.*)", "destination": "/index.html" }]`)
 2. Create Vercel project pointing to `admin/` subdirectory, set root directory to `admin`
 3. Add env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) in Vercel project settings
-4. Configure `admin.oakrank.app` domain
+4. Configure `admin.oakrank.com` domain
 5. Verify: deployed, login works, all CRUD functional
 
 ---

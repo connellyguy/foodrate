@@ -42,7 +42,7 @@
 
 ### 1b: Admin Web App (`admin/` — Vite + Vue 3 + PrimeVue)
 
-See [.ai/plans/admin-app.md](admin-app.md) for full implementation plan.
+See [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md) for full implementation plan. Progress tracked in [.ai/plans/admin/progress.md](admin/progress.md).
 
 - [ ] Phase A: Scaffold + Auth (Vite, PrimeVue, Supabase client, login, layout)
 - [ ] Phase B: Restaurant CRUD (DataTable, create/edit/delete, Nominatim geocoding)
@@ -50,7 +50,7 @@ See [.ai/plans/admin-app.md](admin-app.md) for full implementation plan.
 - [ ] Phase D: Rating Seed + Browse (seed dialog, rating table)
 - [ ] Phase E: Moderation (migration, status toggling, bulk actions)
 - [ ] Phase F: Dashboard (seeding health, gap detection)
-- [ ] Phase G: Deploy (Vercel, admin.oakrank.app)
+- [ ] Phase G: Deploy (Vercel, admin.oakrank.com)
 
 ### 1c: Data Seeding
 

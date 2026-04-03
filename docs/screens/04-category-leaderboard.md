@@ -102,7 +102,7 @@ No item photos in list rows. Photos live on Item Detail. The leaderboard is a sc
 | 1 | Home / Explore | Tap a category in the grid (primary entry — vast majority of traffic) |
 | 2 | Search | Type a category name, tap category result |
 | 3 | Item Detail | Tap the category pill on an item |
-| 4 | Deep link | `oakrank.app/raleigh/wings` |
+| 4 | Deep link | `oakrank.com/raleigh/wings` |
 
 ---
 

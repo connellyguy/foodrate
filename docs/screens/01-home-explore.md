@@ -75,7 +75,7 @@ Native platform tab bar (see SCREENS.md Navigation section), persistent across a
 | Back from Category Leaderboard | Back navigation | Scroll position preserved. |
 | Tab bar | Tap "Browse" tab from any screen | Scrolls to top if already on Browse. |
 | After completing a rating | Rating Flow modal dismissed | Returns to Browse if it was behind the modal. |
-| Deep link | oakrank.app with no specific path | Browse screen. |
+| Deep link | oakrank.com with no specific path | Browse screen. |
 
 ---
 

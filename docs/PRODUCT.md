@@ -1,6 +1,6 @@
 # OakRank — Product Definition
 
-**Domain:** oakrank.app
+**Domain:** oakrank.com
 **MVP Market:** Raleigh, NC
 **Platform:** Native app (primary), mobile web (secondary)
 

@@ -1,6 +1,6 @@
 # OakRank Admin — Product Definition
 
-**Domain:** admin.oakrank.app
+**Domain:** admin.oakrank.com
 **Platform:** Web only (desktop-first)
 **Users:** Owner/admin only (single user for MVP)
 **Relationship to main app:** Separate web app, shared Supabase backend

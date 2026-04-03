@@ -13,7 +13,10 @@
     "storybook": "sb-rn-get-stories",
     "dev": "sb-rn-get-stories && expo start",
     "sb": "export EXPO_PUBLIC_STORYBOOK_ENABLED=true && export EXPO_PUBLIC_COLOR_SCHEME=light && sb-rn-get-stories && expo start",
-    "sb:dark": "export EXPO_PUBLIC_STORYBOOK_ENABLED=true && export EXPO_PUBLIC_COLOR_SCHEME=dark && sb-rn-get-stories && expo start"
+    "sb:dark": "export EXPO_PUBLIC_STORYBOOK_ENABLED=true && export EXPO_PUBLIC_COLOR_SCHEME=dark && sb-rn-get-stories && expo start",
+    "admin": "npm run dev --prefix admin",
+    "admin:build": "npm run build --prefix admin",
+    "admin:preview": "npm run preview --prefix admin"
   },
   "dependencies": {
     "@babel/core": "^7.29.0",

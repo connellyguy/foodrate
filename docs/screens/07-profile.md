@@ -104,7 +104,7 @@ The rating history list must load fast. Each row needs enough info (item name, r
 | # | Source | Trigger | State |
 |---|--------|---------|-------|
 | 1 | Tab bar | Tap "Profile" tab from any screen | Default: no filters, sorted by recent. |
-| 2 | Deep link | oakrank.app/profile | Same as above. Sign-in prompt if not authenticated. |
+| 2 | Deep link | oakrank.com/profile | Same as above. Sign-in prompt if not authenticated. |
 | 3 | Post-rating | "View your ratings" link on success state | New rating visible at top of list. |
 
 No entry from other users' profiles or social features (none in MVP).

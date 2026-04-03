@@ -4,7 +4,7 @@ Item-level food rating app. Rate individual dishes, not restaurants.
 
 - **Product doc:** [docs/PRODUCT.md](docs/PRODUCT.md) — read this before making architectural or feature decisions
 - **Architecture doc:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — tech stack, key decisions, and scale triggers
-- **Domain:** oakrank.app
+- **Domain:** oakrank.com
 - **MVP market:** Raleigh, NC only
 - **Platform:** Native app (primary), mobile web (secondary)
 - **MVP categories:** 7 seeded food categories (pizza, wings, tacos, ramen, sushi, ice cream, barbecue)

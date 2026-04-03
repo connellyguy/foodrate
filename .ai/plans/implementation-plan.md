@@ -32,7 +32,7 @@ The pivot from 20 broad categories to 7 seeded + open-ended requires a few schem
 
 ### 1b: Admin Web App
 
-A separate Vite + Vue 3 web app at `admin/` in the monorepo, deployed to `admin.oakrank.app`. The native app contains zero admin code. Full product definition in [docs/ADMIN.md](../docs/ADMIN.md), implementation plan in [.ai/plans/admin-app.md](admin-app.md).
+A separate Vite + Vue 3 web app at `admin/` in the monorepo, deployed to `admin.oakrank.com`. The native app contains zero admin code. Full product definition in [docs/ADMIN.md](../docs/ADMIN.md), implementation plan in [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md).
 
 **Key capabilities:** Full CRUD for restaurants, items, and ratings. Rapid-fire and batch paste item entry. Three-state rating moderation (active/hidden/uncounted). Seeding health dashboard.
 
