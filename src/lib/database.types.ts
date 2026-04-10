@@ -216,6 +216,7 @@ export type Database = {
           created_at: string
           id: string
           item_id: string
+          moderation_status: string
           photo_path: string | null
           sentiment: number
           updated_at: string
@@ -225,6 +226,7 @@ export type Database = {
           created_at?: string
           id?: string
           item_id: string
+          moderation_status?: string
           photo_path?: string | null
           sentiment: number
           updated_at?: string
@@ -234,6 +236,7 @@ export type Database = {
           created_at?: string
           id?: string
           item_id?: string
+          moderation_status?: string
           photo_path?: string | null
           sentiment?: number
           updated_at?: string

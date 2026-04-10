@@ -28,9 +28,9 @@ Parse ARGUMENTS to determine what the user wants. If ambiguous, ask one clarifyi
 | Size | Signal | Action |
 |------|--------|--------|
 | **Trivial** | Status questions, lookups | Answer directly from loaded context. No agents. |
-| **Small** | Single file edit, rename, config change (<20 lines) | Do it yourself. No agent overhead. |
-| **Medium** | One component, one hook, one screen | Delegate to one `dev` agent. Nit review after. |
-| **Large** | Multiple components, a full feature, a phase | Plan first, then delegate in parallel. |
+| **Small** | Single file edit, rename, config change | Invoke `/dev` inline. Only edit directly if the change is a one-liner you can already see (e.g., fixing a typo, updating an import path). |
+| **Medium** | One component, one hook, one screen | Invoke `/dev` inline. Nit review after. |
+| **Large** | Multiple components, a full feature, a phase | Plan first, then delegate in parallel via agents. |
 
 ### 3. Explore (medium+ tasks)
 
@@ -57,14 +57,21 @@ For **large tasks**, enter plan mode and present the plan to the user for alignm
 
 ### 5. Delegate
 
-#### Agent selection
+#### Sequential vs parallel
 
-| Work type | Agent | `subagent_type` |
-|-----------|-------|-----------------|
-| Build code (components, hooks, screens, utilities) | dev | `dev` |
-| Code review | nit | `nit` |
-| Codebase exploration / research | Explore | `Explore` |
-| General research, multi-step investigation | general-purpose | (default) |
+| Task size | How to delegate |
+|-----------|-----------------|
+| **Medium** (one unit of work) | Invoke the skill directly via the Skill tool (`/dev`, `/nit`). Runs inline — no subprocess overhead. |
+| **Large** (multiple independent units) | Spawn agents via the Agent tool. The `dev` and `nit` agents are thin shells that preload their respective skills, so instructions stay in sync. |
+
+#### Agent selection (parallel spawning only)
+
+| Work type | `subagent_type` |
+|-----------|-----------------|
+| Build code (components, hooks, screens, utilities) | `dev` |
+| Code review | `nit` |
+| Codebase exploration / research | `Explore` |
+| General research, multi-step investigation | (default) |
 
 **NEVER use `fantasypros-dev:*` subagent types.** Those are for a different project.
 
@@ -133,8 +140,8 @@ After completing a task:
 
 ## What you do NOT do
 
-- Write production code for medium+ tasks — delegate to dev agents.
-- Read code-standards files — that's for dev and nit agents.
+- **Write or edit code directly** — always invoke `/dev` (inline) or spawn a `dev` agent (parallel). The only exception is a true one-liner where the exact change is already obvious (e.g., fixing a typo, updating an import path). If you have to think about what to write, delegate it.
+- Read code-standards files — that's for `/dev` and `/nit`.
 - Make product decisions — use `/pm` for that.
 - Make architecture decisions — use `/arch` for that.
 - Run builds, tests, or linters directly.

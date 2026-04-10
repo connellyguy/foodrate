@@ -13,44 +13,53 @@
 - [x] Type-check + build pass
 - [ ] Verify: login works, layout renders, non-admin blocked
 
-## Phase B: Restaurant CRUD
+## Phase B: Restaurant CRUD ✅
 
-- [ ] `useRestaurants` composable (list, create, update, delete)
-- [ ] `useCategories` composable (list for dropdowns)
-- [ ] `useMarkets` composable (list for assignment)
-- [ ] `lib/geocode.ts` (Nominatim wrapper)
-- [ ] `RestaurantsView.vue` (DataTable + search + sort)
-- [ ] `RestaurantForm.vue` (create/edit dialog with geocoding)
-- [ ] `DeleteConfirm.vue` (cascading delete confirmation)
+- [x] `useRestaurants` composable (list, create, update, delete)
+- [x] `useCategories` composable (list for dropdowns)
+- [x] `useMarkets` composable (list for assignment)
+- [x] `lib/geocode.ts` (Nominatim wrapper)
+- [x] `RestaurantsView.vue` (DataTable + search + sort)
+- [x] `RestaurantForm.vue` (create/edit dialog with geocoding, Raleigh market default)
+- [x] `DeleteConfirm.vue` (cascading delete confirmation)
+- [x] Toast setup (ToastService in main.ts, Toast in App.vue)
 
-## Phase C: Item CRUD + Batch Entry
+## Phase C: Item CRUD + Batch Entry ✅
 
-- [ ] `useItems` composable (list, create, batch create, update, delete)
-- [ ] `ItemsView.vue` (DataTable, filterable by restaurant/category)
-- [ ] `ItemForm.vue` (single item create/edit)
-- [ ] `ItemBatchForm.vue` (rapid-fire + paste modes)
+- [x] `useItems` composable (list, create, batch create, update, delete)
+- [x] `ItemsView.vue` (DataTable, filterable by restaurant/category)
+- [x] `ItemForm.vue` (single item create/edit)
+- [x] `ItemBatchForm.vue` (rapid-fire + paste modes)
+- [x] `lib/formatDate.ts` (shared utility extracted from duplicated code)
 
-## Phase D: Rating Seed + Browse
+## Phase D: Rating Seed + Browse ✅
 
-- [ ] `useRatings` composable (list, create seed, delete)
-- [ ] `RatingsView.vue` (DataTable with filters)
-- [ ] `RatingForm.vue` (seed dialog with sentiment picker + tags)
+- [x] `useRatings` composable (list with joins, create seed with attribute tags, delete)
+- [x] `RatingsView.vue` (DataTable with restaurant/item filters, sentiment Tag badges)
+- [x] `RatingForm.vue` (seed dialog with item selector, sentiment picker, attribute tag multi-select)
 
-## Phase E: Moderation
+## Phase E: Category Management ✅
 
-- [ ] Run moderation migration (`ratings.moderation_status`)
-- [ ] Regenerate types
-- [ ] `ModerationActions.vue` (status badge + bulk action bar)
-- [ ] Update `RatingsView.vue` (checkboxes, status column, filter)
-- [ ] Update `useRatings` (moderation status update)
+- [x] Extend `useCategories` composable (create, update, fetchWithCounts)
+- [x] `CategoriesView.vue` (DataTable with name, slug, featured tag, sort order, item count)
+- [x] `CategoryForm.vue` (create/edit dialog: name, auto-slug, featured toggle)
+- [x] Route `/categories` + sidebar nav link
 
-## Phase F: Dashboard
+## Phase F: Moderation ✅
 
-- [ ] `useDashboard` composable (aggregate queries, gap detection)
-- [ ] `DashboardView.vue` (stats cards, per-category table, needs-attention lists)
-- [ ] `StatsCard.vue` (number + label card)
+- [x] Run moderation migration (`ratings.moderation_status`, trigger update, admin RLS)
+- [x] Regenerate types
+- [x] `ModerationActions.vue` (clickable status Tag cycling, bulk action bar with Set Active/Hidden/Uncounted)
+- [x] Update `RatingsView.vue` (checkbox selection, status column, moderation status filter, bulk actions)
+- [x] Update `useRatings` (updateModerationStatus, bulkUpdateModerationStatus, MODERATION_STATUSES constant)
 
-## Phase G: Deploy
+## Phase G: Dashboard ✅
+
+- [x] `useDashboard` composable (7 parallel queries: total counts, category breakdown, needs-attention lists)
+- [x] `DashboardView.vue` (stats cards, per-category table, restaurants with no items, items with few ratings)
+- [x] `StatsCard.vue` (number + label + optional icon card)
+
+## Phase H: Deploy
 
 - [ ] `vercel.json` SPA rewrite config
 - [ ] Vercel project setup (admin/ subdirectory)

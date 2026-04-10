@@ -20,6 +20,10 @@
           <i class="pi pi-star" />
           <span>Ratings</span>
         </RouterLink>
+        <RouterLink to="/categories" class="nav-link">
+          <i class="pi pi-tags" />
+          <span>Categories</span>
+        </RouterLink>
       </nav>
     </aside>
 

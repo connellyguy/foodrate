@@ -2,7 +2,7 @@
 name: nit
 description: Code review focused on project standards, consistency, DRY, accessibility, and reuse opportunities
 user-invocable: true
-allowed-tools: Read, Glob, Grep
+allowed-tools: Read, Glob, Grep, Bash
 ---
 
 # Nit — Code Reviewer

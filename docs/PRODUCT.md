@@ -2,7 +2,7 @@
 
 **Domain:** oakrank.com
 **MVP Market:** Raleigh, NC
-**Platform:** Native app (primary), mobile web (secondary)
+**Platform:** Native app (primary), web (secondary — sharing, discovery, and low-friction contribution)
 
 ## Vision
 
@@ -53,7 +53,7 @@ No existing platform solves this problem well. The landscape rates restaurants, 
 | 4 | Ramen | broth, noodle, chashu, egg |
 | 5 | Sushi | freshness, rice, knife work, creativity |
 | 6 | Ice Cream | creaminess, flavor creativity, portion, freshness |
-| 7 | Barbecue | smoke, bark, sauce style, wood, tenderness |
+| 7 | BBQ | smoke, bark, sauce style, wood, tenderness |
 
 These 7 categories get pre-seeded data, leaderboards, and browse-level visibility. Users can submit ratings for items outside these categories — those items live on the restaurant's page but don't get category leaderboards until data density justifies it.
 
@@ -84,7 +84,56 @@ Never let users hit a dead end. If a restaurant has no ratings, redirect to high
 - NLP review processing (attribute tags are user-selected, not extracted from text)
 - Attribute-based search filters and leaderboard facets (deferred until data density supports them)
 - Expansion beyond Raleigh
-- Desktop web experience
+- Desktop-optimized layouts (desktop browsers render the mobile-width layout centered — functional, not styled)
+
+## Web Strategy
+
+The web version is OakRank's top-of-funnel. People discover OakRank through shared links, search results, and word of mouth — and most of them will not install a native app before seeing what the product actually offers. The web version converts curious visitors into contributors.
+
+### Why Web Matters
+
+When someone texts a friend "you have to try the wings at Beasley's," the ideal next step is a link that opens instantly, shows the score, and lets the friend rate it too. If that link redirects to an app store, the loop breaks. Web is the sharing and discovery layer that feeds the native app's growth.
+
+Category leaderboard pages ("Best Wings in Raleigh") are also natural search engine landing pages. Users searching Google for exactly this kind of recommendation should find OakRank.
+
+### Feature Parity (MVP)
+
+The web version is not a stripped-down preview — it's a functional product. Users who never install the native app should still be able to browse and contribute.
+
+| Feature | Web | Native |
+|---------|-----|--------|
+| Browse category leaderboards | Yes | Yes |
+| View restaurant pages and item scores | Yes | Yes |
+| Rate an item (full flow) | Yes | Yes |
+| Attribute tag selection | Yes | Yes |
+| Photo upload with rating | No (MVP) | Yes |
+| Location-aware autocomplete | Yes (browser geolocation API) | Yes |
+| Push notifications | No | Yes |
+| Add to Home Screen (PWA) | Yes | N/A |
+
+The rating flow is the core loop — gating it behind an app install kills contribution volume. Photo upload is the one native-only feature for MVP because camera/gallery integration is meaningfully better in native. Web photo upload can be added post-MVP.
+
+### Shareable URLs
+
+Every entity in OakRank has a stable, human-readable URL. These URLs are the primary sharing mechanism and must render meaningful content without JavaScript for link previews (Open Graph tags).
+
+- **Category leaderboard:** `/raleigh/wings`
+- **Restaurant page:** `/restaurant/beasleys-chicken-honey`
+- **Item detail:** `/item/beasleys-fried-chicken-wings`
+
+URL structure uses city and slug — no opaque IDs in user-facing URLs.
+
+### SEO Requirements
+
+Category leaderboard pages and restaurant pages must be indexable by search engines. These are high-intent pages ("best ramen Raleigh") that can drive organic acquisition. This has architectural implications (server-side rendering or static pre-rendering) that are addressed in the architecture doc.
+
+Item detail pages should also be indexable but are lower priority — users search for categories, not specific dishes.
+
+### App Install Prompts
+
+Web users see a non-blocking prompt to install the native app. The prompt appears after meaningful engagement (e.g., after submitting a rating, not on first page load). It communicates the native benefit (photo uploads, push notifications, faster experience) without gating any functionality.
+
+The web version also supports Add to Home Screen via a PWA manifest. This is the middle ground for users who want quick access but won't go through an app store install.
 
 ## Visual Design Language
 
@@ -159,6 +208,7 @@ No text review required. Text reviews add friction and most users won't write th
 5. **Are the stabilization parameters right?** The neutral prior (2 liked + 1 disliked), dampening curve, early burial threshold (~5–10 votes), and ranking gate (10–20 votes) all need tuning against real data. Watch for: items stuck near neutral too long (prior too heavy), volatile scores (dampening too light), or leaderboards that feel stale (ranking gate too high).
 6. **Does admin seeding create enough initial density?** The admin page must make it fast to bootstrap restaurants and items so the app never feels empty at launch.
 7. **Does the confidence-first UX feel helpful or limiting?** Hiding low-data areas keeps quality high but might frustrate users looking for a specific restaurant. Watch for user complaints about missing restaurants.
+8. **Will web users actually rate, or just browse?** The web version supports the full rating flow, but mobile web friction (no push reminders, browser UX) may mean web visitors skew read-only. Track web vs. native contribution rates — if web rating volume is negligible, reconsider whether the investment in web rating UX is justified or whether web should focus purely on discovery.
 
 ## Future Considerations (Post-MVP)
 

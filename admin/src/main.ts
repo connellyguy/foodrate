@@ -1,26 +1,28 @@
-import { createApp } from 'vue'
+import { createApp } from 'vue';
 
-import PrimeVue from 'primevue/config'
-import Aura from '@primevue/themes/aura'
-import 'primeicons/primeicons.css'
+import PrimeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice';
+import Aura from '@primevue/themes/aura';
+import 'primeicons/primeicons.css';
 
-import App from '@/App.vue'
-import router from '@/router'
-import { useAuth } from '@/composables/useAuth'
+import App from '@/App.vue';
+import router from '@/router';
+import { useAuth } from '@/composables/useAuth';
 
-const app = createApp(App)
+const app = createApp(App);
 
 app.use(PrimeVue, {
-  theme: {
-    preset: Aura,
-    options: {
-      darkModeSelector: '.app-dark',
+    theme: {
+        preset: Aura,
+        options: {
+            darkModeSelector: '.app-dark',
+        },
     },
-  },
-})
-app.use(router)
+});
+app.use(ToastService);
+app.use(router);
 
-const { init } = useAuth()
+const { init } = useAuth();
 init().then(() => {
-  app.mount('#app')
-})
+    app.mount('#app');
+});

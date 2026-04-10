@@ -248,7 +248,15 @@ Each phase is usable independently — you can start seeding after Phase 2 witho
 3. `RatingForm.vue` — seed rating dialog. Item selector (searchable), 4-button sentiment picker, attribute tag multi-select (filtered by item's category).
 4. Verify: can seed ratings, see them in the table, delete them.
 
-### Phase E: Moderation (requires migration)
+### Phase E: Category Management
+
+1. Extend `useCategories` composable — add create and update functions. Create auto-generates slug from name. No delete (categories with items should not be removable from the UI).
+2. `CategoriesView.vue` — DataTable with columns: name (sortable), slug, featured (boolean toggle), sort order, item count, date. Toolbar with "Add Category" button.
+3. `CategoryForm.vue` — PrimeVue Dialog for create/edit. Fields: name (InputText), featured (ToggleSwitch). Slug auto-generated from name on create, shown read-only on edit.
+4. Add `/categories` route and sidebar nav link.
+5. Verify: can add categories, edit name and featured state.
+
+### Phase F: Moderation (requires migration)
 
 1. Run moderation migration (adds `moderation_status`, updates trigger, adds admin RLS)
 2. Regenerate types
@@ -257,14 +265,14 @@ Each phase is usable independently — you can start seeding after Phase 2 witho
 5. Update `useRatings` — moderation status update (single + bulk)
 6. Verify: can moderate single rating, bulk moderate, scores recalculate excluding uncounted
 
-### Phase F: Dashboard
+### Phase G: Dashboard
 
 1. `useDashboard` composable — aggregate queries: total counts, per-category breakdown, gap detection
 2. `DashboardView.vue` — StatsCards at top (total restaurants, items, ratings), per-category table, "needs attention" lists (restaurants with 0 items, items with < N ratings, recently added)
 3. `StatsCard.vue` — simple number + label card
 4. Verify: dashboard reflects real data, gaps are visible
 
-### Phase G: Deploy
+### Phase H: Deploy
 
 1. `vercel.json` in `admin/` — SPA rewrite config (`rewrites: [{ "source": "/(.*)", "destination": "/index.html" }]`)
 2. Create Vercel project pointing to `admin/` subdirectory, set root directory to `admin`
