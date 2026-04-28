@@ -8,7 +8,7 @@ Build order follows the dependency chain: tokens → atoms → domain → compos
 - [design-tokens.md](design-tokens.md) — colors, typography, spacing, radii (WCAG AA audited)
 
 ### Domain Primitives (Storybook complete)
-- [ScoreDisplay.md](ScoreDisplay.md) — OakRank Score (0–100) with "New" badge
+- [ScoreDisplay.md](ScoreDisplay.md) — OakRate Score (0–100) with "New" badge
 - [SentimentInput.md](SentimentInput.md) — 4-bucket selector for rating flow
 - [SentimentDistribution.md](SentimentDistribution.md) — 4-bar sentiment breakdown
 - [TagChip.md](TagChip.md) — single attribute tag (display + interactive modes)

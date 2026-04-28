@@ -1,6 +1,6 @@
 ---
 name: dev
-description: Builder agent for OakRank — spawnable for parallel work. Loads the dev skill.
+description: Builder agent for OakRate — spawnable for parallel work. Loads the dev skill.
 skills:
   - dev
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash

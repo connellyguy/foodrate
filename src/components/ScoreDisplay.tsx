@@ -32,10 +32,10 @@ function buildAccessibilityLabel(
     ratingCount?: number,
 ): string {
     if (isNew) {
-        return 'OakRank score not yet available, new item';
+        return 'OakRate score not yet available, new item';
     }
 
-    const base = `OakRank score ${displayScore} out of 100`;
+    const base = `OakRate score ${displayScore} out of 100`;
     if (ratingCount !== undefined) {
         return `${base}, based on ${ratingCount} ${ratingCount === 1 ? 'rating' : 'ratings'}`;
     }
@@ -80,7 +80,7 @@ export default function ScoreDisplay({
             </View>
             {showLabel && (
                 <Text style={[sizeStyles.label, { color: colors.textTertiary }]}>
-                    OakRank Score
+                    OakRate Score
                 </Text>
             )}
         </View>

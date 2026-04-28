@@ -13,7 +13,7 @@
     "noEmit": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@oakrank/db": ["../src/lib/database.types"]
+      "@oakrate/db": ["../src/lib/database.types"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.vue"]

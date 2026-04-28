@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <aside class="sidebar">
-      <div class="sidebar-brand">OakRank</div>
+      <div class="sidebar-brand">OakRate</div>
 
       <nav class="sidebar-nav">
         <RouterLink to="/" class="nav-link">
@@ -29,7 +29,7 @@
 
     <div class="main">
       <header class="topbar">
-        <h1 class="topbar-title">OakRank Admin</h1>
+        <h1 class="topbar-title">OakRate Admin</h1>
         <Button
           label="Log out"
           icon="pi pi-sign-out"

@@ -1,4 +1,4 @@
-# OakRank — Core Screens (MVP)
+# OakRate — Core Screens (MVP)
 
 7 screens + auth. Every screen maps to one of two core questions ("what should I order here?" / "where's the best [food] near me?") or to the rating action that feeds them.
 

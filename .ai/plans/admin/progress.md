@@ -1,10 +1,10 @@
-# OakRank Admin — Progress
+# OakRate Admin — Progress
 
 ## Phase A: Scaffold + Auth ✅
 
 - [x] Vite + Vue 3 + TypeScript project at `admin/`
 - [x] PrimeVue (Aura theme) + Vue Router setup
-- [x] Supabase client with shared types (`@oakrank/db` alias)
+- [x] Supabase client with shared types (`@oakrate/db` alias)
 - [x] `useAuth` composable (login, logout, admin role check)
 - [x] `LoginView.vue` (email/password, not-authorized handling)
 - [x] `AppLayout.vue` (sidebar nav + header + content slot)
@@ -64,4 +64,4 @@
 - [ ] `vercel.json` SPA rewrite config
 - [ ] Vercel project setup (admin/ subdirectory)
 - [ ] Environment variables in Vercel
-- [ ] `admin.oakrank.com` domain config
+- [ ] `admin.oakrate.com` domain config

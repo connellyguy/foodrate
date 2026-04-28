@@ -1,17 +1,17 @@
-# OakRank — Product Definition
+# OakRate — Product Definition
 
-**Domain:** oakrank.com
+**Domain:** oakrate.com
 **MVP Market:** Raleigh, NC
 **Platform:** Native app (primary), web (secondary — sharing, discovery, and low-friction contribution)
 
 ## Vision
 
-OakRank is an item-level food rating app. Not restaurants — individual dishes. It answers two questions:
+OakRate is an item-level food rating app. Not restaurants — individual dishes. It answers two questions:
 
 1. **"I'm at this restaurant — what should I order?"** Compare rated items on the menu before committing.
 2. **"I want wings — where are the best ones near me?"** Search by food category across all restaurants, filtered by attributes like "crispy" or "extra spicy."
 
-Traditional review platforms (Yelp, Google) rate restaurants. OakRank rates what's actually on your plate.
+Traditional review platforms (Yelp, Google) rate restaurants. OakRate rates what's actually on your plate.
 
 ## Target Users
 
@@ -19,7 +19,7 @@ Traditional review platforms (Yelp, Google) rate restaurants. OakRank rates what
 Always orders the same type of food (wings, tacos, burgers). Wants to know who makes the best version nearby and what specifically makes it the best. Cares about attributes — "crispiest wings," "best dry rub," "biggest portion."
 
 ### The Explorer
-Trying somewhere new and wants to order smart. Uses OakRank at the table to compare items on the menu before deciding. Values crowd wisdom over guessing.
+Trying somewhere new and wants to order smart. Uses OakRate at the table to compare items on the menu before deciding. Values crowd wisdom over guessing.
 
 Both users need the rating flow to be fast (under 10 seconds) and the data to be trustworthy.
 
@@ -34,7 +34,7 @@ No existing platform solves this problem well. The landscape rates restaurants, 
 | Beli | Personal restaurant ranking, no item-level data |
 | The Infatuation | Editorial, not comprehensive |
 
-**OakRank's edge:**
+**OakRate's edge:**
 - **City-deep, not country-wide.** Own Raleigh completely before expanding. Dense local data beats sparse national data.
 - **Category leaderboards.** Ranked lists per food category per city. "Top 10 Wings in Raleigh" as a living, data-driven list.
 - **In-restaurant comparison.** UX designed for the "I'm looking at the menu right now" moment.
@@ -88,13 +88,13 @@ Never let users hit a dead end. If a restaurant has no ratings, redirect to high
 
 ## Web Strategy
 
-The web version is OakRank's top-of-funnel. People discover OakRank through shared links, search results, and word of mouth — and most of them will not install a native app before seeing what the product actually offers. The web version converts curious visitors into contributors.
+The web version is OakRate's top-of-funnel. People discover OakRate through shared links, search results, and word of mouth — and most of them will not install a native app before seeing what the product actually offers. The web version converts curious visitors into contributors.
 
 ### Why Web Matters
 
 When someone texts a friend "you have to try the wings at Beasley's," the ideal next step is a link that opens instantly, shows the score, and lets the friend rate it too. If that link redirects to an app store, the loop breaks. Web is the sharing and discovery layer that feeds the native app's growth.
 
-Category leaderboard pages ("Best Wings in Raleigh") are also natural search engine landing pages. Users searching Google for exactly this kind of recommendation should find OakRank.
+Category leaderboard pages ("Best Wings in Raleigh") are also natural search engine landing pages. Users searching Google for exactly this kind of recommendation should find OakRate.
 
 ### Feature Parity (MVP)
 
@@ -115,7 +115,7 @@ The rating flow is the core loop — gating it behind an app install kills contr
 
 ### Shareable URLs
 
-Every entity in OakRank has a stable, human-readable URL. These URLs are the primary sharing mechanism and must render meaningful content without JavaScript for link previews (Open Graph tags).
+Every entity in OakRate has a stable, human-readable URL. These URLs are the primary sharing mechanism and must render meaningful content without JavaScript for link previews (Open Graph tags).
 
 - **Category leaderboard:** `/raleigh/wings`
 - **Restaurant page:** `/restaurant/beasleys-chicken-honey`
@@ -137,17 +137,17 @@ The web version also supports Add to Home Screen via a PWA manifest. This is the
 
 ## Visual Design Language
 
-OakRank uses **native platform UI controls** and follows each platform's current design language. On iOS 26+, this means Apple's **Liquid Glass** — translucent, glass-like surfaces with dynamic blur, refraction, and tinting. On Android, standard Material Design.
+OakRate uses **native platform UI controls** and follows each platform's current design language. On iOS 26+, this means Apple's **Liquid Glass** — translucent, glass-like surfaces with dynamic blur, refraction, and tinting. On Android, standard Material Design.
 
 The principle: **look native on every platform, not identical across platforms.** Use `NativeTabs` (Expo Router) for tab bars, native navigation headers, and system controls. These automatically adopt each platform's current look — liquid glass on iOS 26, Material on Android — with zero custom styling.
 
-For OakRank's own content surfaces (cards, sheets, leaderboard rows), use `expo-glass-effect` `GlassView` on iOS 26+ for glass material where it fits. On Android and older iOS, `GlassView` falls back to a standard opaque `View` — this is correct behavior, not a gap to fill.
+For OakRate's own content surfaces (cards, sheets, leaderboard rows), use `expo-glass-effect` `GlassView` on iOS 26+ for glass material where it fits. On Android and older iOS, `GlassView` falls back to a standard opaque `View` — this is correct behavior, not a gap to fill.
 
 **No emoji in the UI.** All iconography uses **Lucide** (`lucide-react-native`), a tree-shakable SVG icon library with 1,500+ clean outline-style icons. Emoji render inconsistently across platforms and devices, look unprofessional at small sizes, and can't be styled (color, weight, size) to match the design system. Import only the icons you use — Lucide tree-shakes unused icons out of the bundle.
 
 ## Rating Model: 4-Bucket Sentiment
 
-OakRank does not use star ratings. Stars cause grade inflation — everything clusters at 4-4.5 and the signal disappears. Instead, OakRank uses a 4-bucket sentiment model with a slight negative bias — bad food should be punished more than good food is rewarded.
+OakRate does not use star ratings. Stars cause grade inflation — everything clusters at 4-4.5 and the signal disappears. Instead, OakRate uses a 4-bucket sentiment model with a slight negative bias — bad food should be punished more than good food is rewarded.
 
 | Bucket | Label | Weight | What it means |
 |--------|-------|--------|---------------|
@@ -160,7 +160,7 @@ Each bucket carries a distinct, actionable signal. The even count forces a choic
 
 ### Internal Score
 
-**OakRank Score (internal)** = weighted average of all ratings, yielding a signed value. Positive means net-positive sentiment, negative means net-negative. This signed score is stored internally and used for ranking.
+**OakRate Score (internal)** = weighted average of all ratings, yielding a signed value. Positive means net-positive sentiment, negative means net-negative. This signed score is stored internally and used for ranking.
 
 ### Score Stabilization
 
@@ -180,7 +180,7 @@ Items must reach a minimum vote count (target: 10–20 real votes, tuned at laun
 
 The internal signed score is converted to a **0–10 display scale** for users. Normalization: `displayScore = ((internalAvg + 3) / 5) * 10`, clamped to 0.0–10.0. Displayed with one decimal place.
 
-- **Cards / leaderboards:** OakRank Score (e.g., "8.3") plus a secondary sentiment label (e.g., "92% would order again" — calculated as the percentage of Liked + Loved votes)
+- **Cards / leaderboards:** OakRate Score (e.g., "8.3") plus a secondary sentiment label (e.g., "92% would order again" — calculated as the percentage of Liked + Loved votes)
 - **Item detail:** Score + full distribution — "72% Loved, 20% Liked, 5% Didn't like, 3% Hated"
 - **Attribute tags** carry the nuance on top of the sentiment signal
 

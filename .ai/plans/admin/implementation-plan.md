@@ -1,12 +1,12 @@
-# OakRank Admin — Implementation Plan
+# OakRate Admin — Implementation Plan
 
 ## Architecture Decisions
 
 ### Monorepo subdirectory, not separate repo
 
-The admin app lives at `admin/` within the existing OakRank repo. Reasons:
+The admin app lives at `admin/` within the existing OakRate repo. Reasons:
 
-- **Shared types** — `database.types.ts` is generated once by `npm run gen-types` in the root. The admin app imports it via a tsconfig path alias (`@oakrank/types` → `../src/lib/database.types`). No package publishing, no git submodules, no sync issues.
+- **Shared types** — `database.types.ts` is generated once by `npm run gen-types` in the root. The admin app imports it via a tsconfig path alias (`@oakrate/types` → `../src/lib/database.types`). No package publishing, no git submodules, no sync issues.
 - **Shared migrations** — `supabase/` stays in one place. The moderation migration lands alongside the existing ones.
 - **Single Vercel project** — Vercel monorepo support deploys `admin/` as its own project, separate from the Expo web export. Each has its own `vercel.json`.
 - **Simpler DX** — one repo to clone, one place to run gen-types, one PR for schema + admin changes.
@@ -122,7 +122,7 @@ begin
 
   update public.items
   set
-    oakrank_score = coalesce((
+    oakrate_score = coalesce((
       select round(avg(
         case sentiment
           when  2 then   2
@@ -169,7 +169,7 @@ The generated `src/lib/database.types.ts` is the source of truth. The admin app 
 {
   "compilerOptions": {
     "paths": {
-      "@oakrank/db": ["../src/lib/database.types"]
+      "@oakrate/db": ["../src/lib/database.types"]
     }
   }
 }
@@ -177,7 +177,7 @@ The generated `src/lib/database.types.ts` is the source of truth. The admin app 
 
 ```ts
 // admin/src/lib/supabase.ts
-import type { Database } from '@oakrank/db'
+import type { Database } from '@oakrate/db'
 import { createClient } from '@supabase/supabase-js'
 
 export const supabase = createClient<Database>(
@@ -195,7 +195,7 @@ import { resolve } from 'path'
 export default defineConfig({
   resolve: {
     alias: {
-      '@oakrank/db': resolve(__dirname, '../src/lib/database.types'),
+      '@oakrate/db': resolve(__dirname, '../src/lib/database.types'),
       '@': resolve(__dirname, 'src'),
     }
   }
@@ -277,7 +277,7 @@ Each phase is usable independently — you can start seeding after Phase 2 witho
 1. `vercel.json` in `admin/` — SPA rewrite config (`rewrites: [{ "source": "/(.*)", "destination": "/index.html" }]`)
 2. Create Vercel project pointing to `admin/` subdirectory, set root directory to `admin`
 3. Add env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) in Vercel project settings
-4. Configure `admin.oakrank.com` domain
+4. Configure `admin.oakrate.com` domain
 5. Verify: deployed, login works, all CRUD functional
 
 ---

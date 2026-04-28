@@ -1,4 +1,4 @@
-# OakRank — Implementation Plan
+# OakRate — Implementation Plan
 
 ## Phase 0: Foundation (Infrastructure + Tooling) ✅
 
@@ -32,7 +32,7 @@ The pivot from 20 broad categories to 7 seeded + open-ended requires a few schem
 
 ### 1b: Admin Web App
 
-A separate Vite + Vue 3 web app at `admin/` in the monorepo, deployed to `admin.oakrank.com`. The native app contains zero admin code. Full product definition in [docs/ADMIN.md](../docs/ADMIN.md), implementation plan in [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md).
+A separate Vite + Vue 3 web app at `admin/` in the monorepo, deployed to `admin.oakrate.com`. The native app contains zero admin code. Full product definition in [docs/ADMIN.md](../docs/ADMIN.md), implementation plan in [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md).
 
 **Key capabilities:** Full CRUD for restaurants, items, and ratings. Rapid-fire and batch paste item entry. Three-state rating moderation (active/hidden/uncounted). Seeding health dashboard.
 
@@ -74,7 +74,7 @@ This isn't a polish task — it's a core architectural decision. Every query hoo
 Build the TanStack Query hooks that power all read screens. Each hook returns data shaped for its screen, including fallback content when primary data is sparse.
 
 - **`useCategories`** — featured categories for the browse grid (where `featured = true`)
-- **`useLeaderboard(categorySlug)`** — ranked items within a category for the current market, ordered by OakRank score. Minimum rating threshold for inclusion (e.g., ≥ 3 ratings).
+- **`useLeaderboard(categorySlug)`** — ranked items within a category for the current market, ordered by OakRate score. Minimum rating threshold for inclusion (e.g., ≥ 3 ratings).
 - **`useRestaurant(id)`** — restaurant detail with its items, grouped by category, ordered by score
 - **`useItem(id)`** — item detail with sentiment distribution, rating count, high-confidence attribute tags
 - **`useSearch(query)`** — Postgres FTS across restaurants and items, location-aware ranking
@@ -98,7 +98,7 @@ Atomic primitives (Button, TextInput, Skeleton, etc.) are built as needed by scr
 - **Browse (Home)** — grid of 7 featured category cards, "Top Rated Near You" section (PostGIS), pulls from `useCategories` and `useNearby`
 - **Category Leaderboard** — ranked list of items in a category for Raleigh. No attribute filtering (deferred). If category has few items, supplement with cross-category top items nearby.
 - **Restaurant Detail** — restaurant info, item list grouped by category and ranked by score. If no items are rated, show "Rate something here!" CTA + nearby top-rated items in the same categories.
-- **Item Detail** — OakRank score, sentiment distribution bar, high-confidence attribute tags, photo gallery, rating count. "Early" badge for low rating counts.
+- **Item Detail** — OakRate score, sentiment distribution bar, high-confidence attribute tags, photo gallery, rating count. "Early" badge for low rating counts.
 - **Search** — autocomplete across restaurants and items (Postgres FTS). Location-aware result ranking. No-results state shows trending items and top categories, not an empty screen.
 
 ---
@@ -126,7 +126,7 @@ The 6-step flow, optimized for speed:
 
 ### 3c: Score Recalculation
 
-When a rating is submitted, recalculate the item's OakRank score. Use a **Supabase edge function** triggered on rating insert/update/delete — the scoring logic has enough moving parts (neutral prior, early burial protection, dampening) that a Postgres trigger would be awkward to maintain.
+When a rating is submitted, recalculate the item's OakRate score. Use a **Supabase edge function** triggered on rating insert/update/delete — the scoring logic has enough moving parts (neutral prior, early burial protection, dampening) that a Postgres trigger would be awkward to maintain.
 
 The edge function must:
 1. **Fetch all ratings** for the item

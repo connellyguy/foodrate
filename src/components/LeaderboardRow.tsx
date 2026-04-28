@@ -44,7 +44,7 @@ export default function LeaderboardRow({
     const accessibilityLabel = [
         `Number ${rank}`,
         `${itemName} at ${restaurantName}`,
-        `OakRank score ${displayScore}`,
+        `OakRate score ${displayScore}`,
         `${ratingCount} ${ratingCount === 1 ? 'rating' : 'ratings'}`,
     ].join(', ');
 

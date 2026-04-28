@@ -80,7 +80,7 @@ export type Database = {
           fts: unknown
           id: string
           name: string
-          oakrank_score: number
+          oakrate_score: number
           rating_count: number
           restaurant_id: string
           updated_at: string
@@ -91,7 +91,7 @@ export type Database = {
           fts?: unknown
           id?: string
           name: string
-          oakrank_score?: number
+          oakrate_score?: number
           rating_count?: number
           restaurant_id: string
           updated_at?: string
@@ -102,7 +102,7 @@ export type Database = {
           fts?: unknown
           id?: string
           name?: string
-          oakrank_score?: number
+          oakrate_score?: number
           rating_count?: number
           restaurant_id?: string
           updated_at?: string

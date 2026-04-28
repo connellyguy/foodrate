@@ -1,6 +1,6 @@
 # Accessibility
 
-OakRank is a consumer app. Accessible implementation is a requirement, not an enhancement.
+OakRate is a consumer app. Accessible implementation is a requirement, not an enhancement.
 
 ## Interactive Elements
 

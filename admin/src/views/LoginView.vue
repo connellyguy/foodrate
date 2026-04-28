@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-card">
-      <h1>OakRank Admin</h1>
+      <h1>OakRate Admin</h1>
 
       <form @submit.prevent="handleLogin">
         <div class="field">
@@ -10,7 +10,7 @@
             id="email"
             v-model="email"
             type="email"
-            placeholder="admin@oakrank.com"
+            placeholder="admin@oakrate.com"
             :disabled="loading"
             fluid
           />

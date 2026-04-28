@@ -2,12 +2,12 @@ import { ExpoConfig, ConfigContext } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "OakRank",
-  slug: "oakrank",
+  name: "OakRate",
+  slug: "oakrate",
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
-  scheme: "oakrank",
+  scheme: "oakrate",
   userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/images/splash-icon.png",
@@ -16,7 +16,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   ios: {
     supportsTablet: false,
-    bundleIdentifier: "app.oakrank",
+    bundleIdentifier: "app.oakrate",
   },
   android: {
     adaptiveIcon: {
@@ -25,7 +25,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundImage: "./assets/images/android-icon-background.png",
       monochromeImage: "./assets/images/android-icon-monochrome.png",
     },
-    package: "app.oakrank",
+    package: "app.oakrate",
   },
   web: {
     bundler: "metro",

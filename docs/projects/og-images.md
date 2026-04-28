@@ -26,7 +26,7 @@ The "you have to try this" card. Most important preview type — personal recomm
 | Field | Content |
 |-------|---------|
 | Title | [Item Name] at [Restaurant] |
-| Score | OakRank score (e.g., 8.3) |
+| Score | OakRate score (e.g., 8.3) |
 | Sentiment | "92% would order again" |
 | Photo | Item photo if available, otherwise branded layout |
 | twitter:card | `summary_large_image` if photo, `summary` otherwise |
@@ -61,7 +61,7 @@ The "best X in Y" card. Highest organic share potential — this is the link peo
 
 | Field | Content |
 |-------|---------|
-| Title | OakRank — Rate the food, not the restaurant |
+| Title | OakRate — Rate the food, not the restaurant |
 | Description | Item-level food ratings for Raleigh |
 | Image | Static branded card (pre-made asset, no generation) |
 | twitter:card | `summary` |
@@ -143,7 +143,7 @@ export async function GET(request: ExpoRequest, { path }: { path: string[] }) {
 
 Each SSR page references its OG image in the `<Head>` component:
 ```html
-<meta property="og:image" content="https://oakrank.com/og/item/beasleys-fried-chicken-wings" />
+<meta property="og:image" content="https://oakrate.com/og/item/beasleys-fried-chicken-wings" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 ```
@@ -159,7 +159,7 @@ Satori has **no system font access** — you must provide at least one font as a
 | Approach | Effort | Result |
 |---|---|---|
 | Bundle Inter (or similar) from Google Fonts as a `.woff` file in the repo | Low | Clean, readable, ships fast |
-| Bundle the OakRank brand typeface | Low-medium | More polished, but must be a static `.ttf`/`.woff` — no variable fonts |
+| Bundle the OakRate brand typeface | Low-medium | More polished, but must be a static `.ttf`/`.woff` — no variable fonts |
 
 **Recommendation:** Bundle a single weight of the brand typeface (bold/semibold — the one used for headings). OG images only need one weight since they display short text at large sizes. Place the font file at `assets/fonts/og/` and load it in the API route:
 
@@ -224,7 +224,7 @@ Specific layouts deferred to implementation, but architectural constraints that 
 - **1200x630px** — standard OG image dimensions, works for all platforms
 - **Dark background** — stands out in light-mode chat apps (iMessage, Slack, Discord) and social feeds. Dark cards with light text have higher visual contrast in preview contexts.
 - **Score displayed large** — 72px+ font size, the single most important visual element
-- **OakRank wordmark** — consistent position (bottom-right), small, branded but not dominant
+- **OakRate wordmark** — consistent position (bottom-right), small, branded but not dominant
 - **Text truncation** — long item/restaurant names get `text-overflow: ellipsis`. Design must handle names up to ~60 characters gracefully.
 - **No-score variant** — items below the ranking threshold show sentiment label ("Mostly loved") at the same visual prominence where the score would be. No empty space.
 
@@ -243,7 +243,7 @@ None of these are tight constraints. OG image generation is not latency-sensitiv
 
 Text OG tags on every SSR route + one static 1200x630 branded image used as the default `og:image` across all pages. This is part of the SSR implementation, not this project. It means every shared link shows:
 - Correct title and description (contextual, data-driven)
-- A generic OakRank brand card as the image
+- A generic OakRate brand card as the image
 
 That's a functional baseline. This project upgrades the image from generic to contextual.
 

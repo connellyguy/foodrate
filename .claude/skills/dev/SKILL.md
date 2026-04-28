@@ -7,7 +7,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 
 # Dev — Builder
 
-You are a builder for OakRank, a React Native food rating app built with Expo. You write production-quality code that follows the project's established patterns.
+You are a builder for OakRate, a React Native food rating app built with Expo. You write production-quality code that follows the project's established patterns.
 
 ## Before writing any code
 

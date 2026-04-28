@@ -1,15 +1,15 @@
-# OakRank Admin — Product Definition
+# OakRate Admin — Product Definition
 
-**Domain:** admin.oakrank.com
+**Domain:** admin.oakrate.com
 **Platform:** Web only (desktop-first)
 **Users:** Owner/admin only (single user for MVP)
 **Relationship to main app:** Separate web app, shared Supabase backend
 
 ## Purpose
 
-The admin app is operational tooling for bootstrapping and maintaining OakRank's data. It handles cold-start seeding (restaurants, menu items, ratings) and ongoing content moderation. It is not user-facing — it's an internal tool optimized for keyboard-heavy desktop workflows.
+The admin app is operational tooling for bootstrapping and maintaining OakRate's data. It handles cold-start seeding (restaurants, menu items, ratings) and ongoing content moderation. It is not user-facing — it's an internal tool optimized for keyboard-heavy desktop workflows.
 
-The main OakRank native app contains zero admin code. The admin app connects to the same Supabase project and relies on the same RLS policies, authenticated as a user with `profiles.role = 'admin'`.
+The main OakRate native app contains zero admin code. The admin app connects to the same Supabase project and relies on the same RLS policies, authenticated as a user with `profiles.role = 'admin'`.
 
 ## Core Capabilities
 
@@ -53,7 +53,7 @@ Three-state moderation model for ratings:
 
 - **Single moderation** — tap/click a rating to change its status. One click cycles through: active → hidden → uncounted → active.
 - **Bulk moderation** — select multiple ratings (checkbox), apply a status to all. For brigading situations where many ratings need to be uncounted at once.
-- Score recalculation must respect moderation status: `active` and `hidden` ratings count toward the OakRank score; `uncounted` ratings do not.
+- Score recalculation must respect moderation status: `active` and `hidden` ratings count toward the OakRate score; `uncounted` ratings do not.
 
 ### Data Overview
 

@@ -34,7 +34,7 @@ Auth prompt triggers on the Rating Flow screen if not signed in — the CTA is a
 
 ### Rated Items List
 
-Sorted by OakRank Score (highest first). Ties broken by rating count (more ratings wins).
+Sorted by OakRate Score (highest first). Ties broken by rating count (more ratings wins).
 
 Each row (full row is tappable → Item Detail):
 
@@ -42,7 +42,7 @@ Each row (full row is tappable → Item Detail):
 |---------|------|---------|
 | Item name | Bold body text | e.g., "Carolina Reaper Wings" |
 | Category tag | Small pill | e.g., "Wings" |
-| OakRank Score | Numeric | Aggregate score (e.g., "87") |
+| OakRate Score | Numeric | Aggregate score (e.g., "87") |
 | Rating count | Caption | e.g., "(27)" — inline next to score |
 | Top attribute tags | Small chips, max 3 | Top 3 by selection frequency. Remainder visible on Item Detail. |
 | User's own rating indicator | Subtle icon/text | If the current user has rated this item, show a small checkmark or "You: Loved it". Helps recall what they've tried. |
@@ -116,7 +116,7 @@ Read-only, high-speed. No auth required. Should load and be scannable in under 2
 | Tap back / swipe back | Previous screen (nav stack) |
 | Tap an item row | Item Detail |
 | Tap rate CTA | Rating Flow (restaurant pre-filled) |
-| Tap address line | Native maps (leaves OakRank) |
+| Tap address line | Native maps (leaves OakRate) |
 | Tap share icon | Share sheet overlay (stays on screen) |
 | Tap Browse tab | Browse |
 | Tap Search tab | Search |

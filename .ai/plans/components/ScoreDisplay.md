@@ -5,15 +5,15 @@
 
 ## What It Is
 
-Read-only display of an OakRank Score (0–100 scale). The primary way aggregate ratings appear across the app. Replaces traditional star displays.
+Read-only display of an OakRate Score (0–100 scale). The primary way aggregate ratings appear across the app. Replaces traditional star displays.
 
 ## Props
 
 | Prop | Type | Default | Notes |
 |------|------|---------|-------|
-| score | number | — | OakRank Score (-100 to +100 from DB, displayed as 0–100) |
+| score | number | — | OakRate Score (-100 to +100 from DB, displayed as 0–100) |
 | size | 'sm' \| 'md' \| 'lg' | 'md' | Font size / visual weight |
-| showLabel | boolean | false | If true, shows a text label below (e.g., "OakRank Score") |
+| showLabel | boolean | false | If true, shows a text label below (e.g., "OakRate Score") |
 | ratingCount | number | undefined | If provided, shows "(42 ratings)" next to score |
 
 ## Score Display Logic
@@ -24,7 +24,7 @@ Read-only display of an OakRank Score (0–100 scale). The primary way aggregate
 
 ## Accessibility
 
-- `accessibilityLabel="OakRank score {displayScore} out of 100, based on {ratingCount} ratings"`
+- `accessibilityLabel="OakRate score {displayScore} out of 100, based on {ratingCount} ratings"`
 - Color is not the sole indicator — the number itself carries the information
 
 ## Stories

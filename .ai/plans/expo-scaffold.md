@@ -3,7 +3,7 @@
 ## Architecture Decisions
 
 ### 1. Expo Router (not React Navigation)
-Expo Router is the default for new Expo projects, built on React Navigation under the hood. OakRank's navigation (bottom tabs with stacks per tab) maps directly to `(tabs)` groups and nested layouts. The rating flow is a multi-step wizard — handle it as a single screen with internal step state or a modal stack group, not individual routes per step.
+Expo Router is the default for new Expo projects, built on React Navigation under the hood. OakRate's navigation (bottom tabs with stacks per tab) maps directly to `(tabs)` groups and nested layouts. The rating flow is a multi-step wizard — handle it as a single screen with internal step state or a modal stack group, not individual routes per step.
 
 ### 2. Managed workflow (with dev client)
 No custom native code needed for MVP. Camera, location, push notifications are all covered by Expo modules. `expo-dev-client` gives custom dev builds with hot reload. **Eject trigger:** needing a native module that doesn't exist in Expo's ecosystem.

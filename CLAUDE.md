@@ -1,10 +1,10 @@
-# OakRank
+# OakRate
 
 Item-level food rating app. Rate individual dishes, not restaurants.
 
 - **Product doc:** [docs/PRODUCT.md](docs/PRODUCT.md) — read this before making architectural or feature decisions
 - **Architecture doc:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — tech stack, key decisions, and scale triggers
-- **Domain:** oakrank.com
+- **Domain:** oakrate.com
 - **MVP market:** Raleigh, NC only
 - **Platform:** Native app (primary), web (secondary — sharing, discovery, and low-friction contribution)
 - **MVP categories:** 7 seeded food categories (pizza, wings, tacos, ramen, sushi, ice cream, BBQ)

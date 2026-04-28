@@ -51,7 +51,7 @@ Stories:
 Three small components, each with their own story file:
 
 **ScoreDisplay** — `src/components/ScoreDisplay.tsx`
-- Renders OakRank score (maps -100..+100 to 0..100 display)
+- Renders OakRate score (maps -100..+100 to 0..100 display)
 - Color-coded by score range
 - "New" state for < 3 ratings
 - Props: score, size (sm/md/lg), ratingCount

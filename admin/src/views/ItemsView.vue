@@ -56,9 +56,9 @@
             <Column field="name" header="Name" sortable />
             <Column field="restaurant_name" header="Restaurant" sortable />
             <Column field="category_name" header="Category" sortable />
-            <Column field="oakrank_score" header="Score" :style="{ width: '6rem' }">
+            <Column field="oakrate_score" header="Score" :style="{ width: '6rem' }">
                 <template #body="{ data }">
-                    {{ data.oakrank_score ?? '-' }}
+                    {{ data.oakrate_score ?? '-' }}
                 </template>
             </Column>
             <Column field="rating_count" header="Ratings" :style="{ width: '6rem' }" />

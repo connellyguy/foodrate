@@ -1,4 +1,4 @@
-# OakRank — Architecture
+# OakRate — Architecture
 
 ## Stack
 
@@ -21,7 +21,7 @@
 
 ## Key Decisions
 
-**Expo over Flutter** — OakRank should feel native on each platform. Expo renders real native components; Flutter paints its own. TypeScript also lets us share types/validation between app and backend. Larger hiring pool than Dart.
+**Expo over Flutter** — OakRate should feel native on each platform. Expo renders real native components; Flutter paints its own. TypeScript also lets us share types/validation between app and backend. Larger hiring pool than Dart.
 
 **Supabase over Firebase** — The data model (restaurants → items → ratings → attribute tags) is deeply relational. NoSQL would require painful denormalization and can't aggregate ratings efficiently. Postgres also gives us PostGIS and full-text search without additional services.
 
@@ -31,7 +31,7 @@
 
 **RLS enabled from day one** — All tables use row-level security. Policies enforce access at the database level (e.g., anyone reads ratings, only author modifies their own).
 
-**Native platform UI, not cross-platform skinning** — Use native controls everywhere: `NativeTabs` (Expo Router) for tab bars, native stack headers, system sheets. On iOS 26+ these automatically render with Apple's Liquid Glass. On Android they render with Material Design. No custom styling to maintain, no platform-specific CSS. For OakRank's own content surfaces that benefit from glass material (cards, overlays), use `expo-glass-effect` (`GlassView`) — it falls back to a plain `View` on Android and older iOS, which is the correct behavior.
+**Native platform UI, not cross-platform skinning** — Use native controls everywhere: `NativeTabs` (Expo Router) for tab bars, native stack headers, system sheets. On iOS 26+ these automatically render with Apple's Liquid Glass. On Android they render with Material Design. No custom styling to maintain, no platform-specific CSS. For OakRate's own content surfaces that benefit from glass material (cards, overlays), use `expo-glass-effect` (`GlassView`) — it falls back to a plain `View` on Android and older iOS, which is the correct behavior.
 
 **Server rendering for web, not static export** — The web version needs indexable pages for SEO and rendered HTML for link previews (iMessage, Slack, Discord, X — none of these execute JavaScript). Expo Router 55 supports `output: "server"` with per-route `loader` functions, `Head` for meta/OG tags, and a built-in Vercel adapter (`expo-server` 55.0.6, already installed). This is a single config change from the current `output: "static"` and keeps the one-codebase approach. Routes without a loader stay client-rendered — no change to how they work today. A separate Next.js web app was rejected because it duplicates the entire UI layer and doubles maintenance.
 

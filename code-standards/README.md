@@ -1,6 +1,6 @@
-# OakRank Code Standards
+# OakRate Code Standards
 
-Standards for the OakRank codebase. Enforced via ESLint + `@stylistic/eslint-plugin` and EditorConfig where possible.
+Standards for the OakRate codebase. Enforced via ESLint + `@stylistic/eslint-plugin` and EditorConfig where possible.
 
 | Category | File |
 |----------|------|

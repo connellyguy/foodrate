@@ -38,7 +38,7 @@ Each row (entire row tappable → Item Detail):
 | Rank number | Large bold text | Sequential (1, 2, 3…). Re-numbers when filters change. |
 | Item name | Primary bold text | e.g., "Smoked Wings" |
 | Restaurant name | Secondary muted text | e.g., "Beasley's Chicken + Honey" |
-| OakRank Score | Numeric | Aggregate score (e.g., "87") |
+| OakRate Score | Numeric | Aggregate score (e.g., "87") |
 | Rating count | Tertiary text | e.g., "(38 ratings)" |
 | Top attribute tags | 1–3 small display chips | Most frequently selected attributes. Display only (not filters). |
 | Distance | Tertiary text | e.g., "1.2 mi". Omitted if location unavailable. |
@@ -102,7 +102,7 @@ No item photos in list rows. Photos live on Item Detail. The leaderboard is a sc
 | 1 | Home / Explore | Tap a category in the grid (primary entry — vast majority of traffic) |
 | 2 | Search | Type a category name, tap category result |
 | 3 | Item Detail | Tap the category pill on an item |
-| 4 | Deep link | `oakrank.com/raleigh/wings` |
+| 4 | Deep link | `oakrate.com/raleigh/wings` |
 
 ---
 

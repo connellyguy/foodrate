@@ -1,4 +1,4 @@
-// OakRank Design Tokens
+// OakRate Design Tokens
 // Consumed via StyleSheet.create — all values are density-independent pixels (no CSS units).
 
 // ============================================================

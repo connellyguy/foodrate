@@ -26,7 +26,7 @@ The proof screen. Shows *why* something is rated the way it is. Every element bu
 
 | Element | Type | Details |
 |---------|------|---------|
-| OakRank Score | Large numeric display | Score on a 0–100 scale (e.g., "87"). Visual anchor of the screen. |
+| OakRate Score | Large numeric display | Score on a 0–100 scale (e.g., "87"). Visual anchor of the screen. |
 | Sentiment distribution | 4 horizontal bars | Loved → Hated, each bar proportional to rating count at that level. Labels + percentages (e.g., "Loved it — 72%"). |
 | Total rating count | Text label | e.g., "128 ratings" |
 | "Rate this item" CTA | Primary button | Navigates to Rating Flow with restaurant + item pre-filled. Changes to "Update your rating" if user already rated. |
@@ -111,7 +111,7 @@ Read-only, judgment-forming. Most users will not rate from here — they rate af
 | 2 | Category Leaderboard | Tap any item row |
 | 3 | Search | Tap an item in search results |
 | 4 | Profile / My Ratings | Tap any rating row |
-| 5 | Deep link | Shared OakRank item link |
+| 5 | Deep link | Shared OakRate item link |
 | 6 | Home / Explore | Tap a trending/top-rated item card |
 
 ---

@@ -13,7 +13,7 @@ export default defineConfig({
           const addr = server.httpServer?.address()
           const port = typeof addr === 'object' && addr ? addr.port : 5173
           setTimeout(() => {
-            console.log(`  ➜  Admin:   http://admin-local.oakrank.com:${port}/`)
+            console.log(`  ➜  Admin:   http://admin-local.oakrate.com:${port}/`)
           }, 0)
         })
       },
@@ -21,13 +21,13 @@ export default defineConfig({
   ],
   server: {
     host: true,
-    allowedHosts: ['admin-local.oakrank.com'],
-    open: 'http://admin-local.oakrank.com:5173',
+    allowedHosts: ['admin-local.oakrate.com'],
+    open: 'http://admin-local.oakrate.com:5173',
   },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@oakrank/db': fileURLToPath(new URL('../src/lib/database.types', import.meta.url)),
+      '@oakrate/db': fileURLToPath(new URL('../src/lib/database.types', import.meta.url)),
     },
   },
 })

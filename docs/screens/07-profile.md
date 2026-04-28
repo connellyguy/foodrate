@@ -66,7 +66,7 @@ Below rating history. Only visible on scroll to bottom. Low prominence.
 | Element | Type | Details |
 |---------|------|---------|
 | Edit display name | Row + chevron | Shows current name. Taps to inline edit or modal with text input + save/cancel. |
-| Sign out | Row (red text) | Confirmation dialog: "Sign out of OakRank?" → Cancel / Sign Out. Clears session, returns to Home (logged out). |
+| Sign out | Row (red text) | Confirmation dialog: "Sign out of OakRate?" → Cancel / Sign Out. Clears session, returns to Home (logged out). |
 | Delete account | Row (red text) | Two-step confirmation: first explains permanent deletion, second requires typing "DELETE". Returns to Home. |
 
 ---
@@ -104,7 +104,7 @@ The rating history list must load fast. Each row needs enough info (item name, r
 | # | Source | Trigger | State |
 |---|--------|---------|-------|
 | 1 | Tab bar | Tap "Profile" tab from any screen | Default: no filters, sorted by recent. |
-| 2 | Deep link | oakrank.com/profile | Same as above. Sign-in prompt if not authenticated. |
+| 2 | Deep link | oakrate.com/profile | Same as above. Sign-in prompt if not authenticated. |
 | 3 | Post-rating | "View your ratings" link on success state | New rating visible at top of list. |
 
 No entry from other users' profiles or social features (none in MVP).

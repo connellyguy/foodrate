@@ -38,7 +38,7 @@ Hidden entirely if no restaurants match.
 Each row:
 - **Item name** — bold primary text
 - **Restaurant name** — secondary text (e.g., "at Backyard BBQ Pit")
-- **OakRank Score** — numeric (e.g., "87")
+- **OakRate Score** — numeric (e.g., "87")
 - **Rating count** — small text (e.g., "18 ratings")
 - **Category tag** — small chip (e.g., "Wings")
 
@@ -88,7 +88,7 @@ Tapping a result immediately navigates away (pushed onto the Search nav stack).
 | # | Source | Trigger |
 |---|--------|---------|
 | 1 | Tab bar | Tap Search tab (accessible from any screen) |
-| 2 | Deep link | `oakrank.com/search?q=wings` — opens with query pre-filled (edge case, not primary MVP flow) |
+| 2 | Deep link | `oakrate.com/search?q=wings` — opens with query pre-filled (edge case, not primary MVP flow) |
 
 ---
 

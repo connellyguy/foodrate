@@ -84,7 +84,7 @@ import MultiSelect from 'primevue/multiselect';
 import Select from 'primevue/select';
 import { useToast } from 'primevue/usetoast';
 
-import type { Database } from '@oakrank/db';
+import type { Database } from '@oakrate/db';
 
 import { useAuth } from '@/composables/useAuth';
 import type { ItemWithJoins } from '@/composables/useItems';

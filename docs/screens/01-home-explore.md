@@ -27,7 +27,7 @@ All 20 categories visible without a "see all" gate. Grid scrolls as part of the 
 | Element | Type | Details |
 |---------|------|---------|
 | Section header | Bold text | "Top rated near you" (or "Top rated in Raleigh" if location denied) |
-| Item cards | Horizontal scrolling list | 5–8 cards. Each card: item name, restaurant name, OakRank Score (numeric, 0–100), rating count, category tag pill, photo thumbnail (fallback: category illustration). Tappable → Item Detail. |
+| Item cards | Horizontal scrolling list | 5–8 cards. Each card: item name, restaurant name, OakRate Score (numeric, 0–100), rating count, category tag pill, photo thumbnail (fallback: category illustration). Tappable → Item Detail. |
 
 Ranked by Bayesian average or Wilson score (not raw average). Items with fewer than 3 ratings excluded.
 
@@ -70,12 +70,12 @@ Native platform tab bar (see SCREENS.md Navigation section), persistent across a
 
 | Source | Trigger | State |
 |--------|---------|-------|
-| App launch (cold) | User opens OakRank | Default. Location permission requested if not yet granted. |
+| App launch (cold) | User opens OakRate | Default. Location permission requested if not yet granted. |
 | App launch (warm) | User returns from background | Preserved scroll position. Silent background data refresh if stale (>5 min). |
 | Back from Category Leaderboard | Back navigation | Scroll position preserved. |
 | Tab bar | Tap "Browse" tab from any screen | Scrolls to top if already on Browse. |
 | After completing a rating | Rating Flow modal dismissed | Returns to Browse if it was behind the modal. |
-| Deep link | oakrank.com with no specific path | Browse screen. |
+| Deep link | oakrate.com with no specific path | Browse screen. |
 
 ---
 

@@ -19,7 +19,7 @@ export async function geocode(address: string): Promise<GeocodeResult | null> {
         });
 
         const response = await fetch(`${NOMINATIM_URL}?${params}`, {
-            headers: { 'User-Agent': 'OakRank-Admin/1.0' },
+            headers: { 'User-Agent': 'OakRate-Admin/1.0' },
         });
 
         if (!response.ok) {

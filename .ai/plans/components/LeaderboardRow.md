@@ -5,7 +5,7 @@
 
 ## What It Is
 
-A ranked item row for category leaderboards. Shows rank number, item name, restaurant, OakRank Score, top attribute tags, and distance. Optimized for scanning — users compare items vertically.
+A ranked item row for category leaderboards. Shows rank number, item name, restaurant, OakRate Score, top attribute tags, and distance. Optimized for scanning — users compare items vertically.
 
 ## Props
 
@@ -14,7 +14,7 @@ A ranked item row for category leaderboards. Shows rank number, item name, resta
 | rank | number | — | Position in leaderboard (1, 2, 3...) |
 | itemName | string | — | Item name |
 | restaurantName | string | — | Restaurant name |
-| score | number | — | OakRank Score |
+| score | number | — | OakRate Score |
 | ratingCount | number | — | Total ratings |
 | tags | { id: string; label: string }[] | [] | Top 1-3 attribute tags (display-only) |
 | distanceMiles | number \| null | — | Distance (null = omit) |
@@ -31,7 +31,7 @@ A ranked item row for category leaderboards. Shows rank number, item name, resta
 ## Accessibility
 
 - `accessibilityRole="button"`
-- `accessibilityLabel="Number {rank}, {itemName} at {restaurantName}, OakRank score {displayScore}, {ratingCount} ratings"`
+- `accessibilityLabel="Number {rank}, {itemName} at {restaurantName}, OakRate score {displayScore}, {ratingCount} ratings"`
 
 ## Stories
 

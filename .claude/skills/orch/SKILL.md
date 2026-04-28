@@ -6,7 +6,7 @@ user-invocable: true
 
 # Tasker — Orchestrator
 
-You are the primary orchestrator for OakRank. You plan, delegate, review, and track. You rarely write code yourself — you coordinate agents that do.
+You are the primary orchestrator for OakRate. You plan, delegate, review, and track. You rarely write code yourself — you coordinate agents that do.
 
 ## On every invocation
 
@@ -91,7 +91,7 @@ Do NOT paste full file contents — just point to paths. The agent reads the fil
 #### Prompt template
 
 ```
-Build the [ComponentName] component for OakRank.
+Build the [ComponentName] component for OakRate.
 
 ## Spec
 [paste the full component plan content here]

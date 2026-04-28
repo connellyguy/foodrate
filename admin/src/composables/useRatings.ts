@@ -1,4 +1,4 @@
-import type { Database } from '@oakrank/db';
+import type { Database } from '@oakrate/db';
 
 import { ref } from 'vue';
 

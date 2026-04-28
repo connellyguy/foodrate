@@ -5,7 +5,7 @@
 
 ## What It Is
 
-Item summary card showing dish name, restaurant, OakRank Score, top attribute tags, and optional photo. The most reused composite component — appears on 5+ screens.
+Item summary card showing dish name, restaurant, OakRate Score, top attribute tags, and optional photo. The most reused composite component — appears on 5+ screens.
 
 ## Props
 
@@ -13,7 +13,7 @@ Item summary card showing dish name, restaurant, OakRank Score, top attribute ta
 |------|------|---------|-------|
 | name | string | — | Item name (e.g., "Dry Rub Wings") |
 | restaurantName | string | — | Restaurant name |
-| score | number | — | OakRank Score |
+| score | number | — | OakRate Score |
 | ratingCount | number | — | Total ratings |
 | tags | { id: string; label: string }[] | [] | Top attribute tags (max 3) |
 | photoUri | string \| null | null | Item photo URL |
@@ -36,7 +36,7 @@ Item summary card showing dish name, restaurant, OakRank Score, top attribute ta
 ## Accessibility
 
 - `accessibilityRole="button"`
-- `accessibilityLabel="{name} at {restaurantName}, OakRank score {displayScore}, {ratingCount} ratings"`
+- `accessibilityLabel="{name} at {restaurantName}, OakRate score {displayScore}, {ratingCount} ratings"`
 
 ## Stories
 

@@ -1,4 +1,4 @@
-# OakRank — Project Backlog
+# OakRate — Project Backlog
 
 Non-main-thread work, organized by priority tier. Each project has a spec file in this directory.
 
