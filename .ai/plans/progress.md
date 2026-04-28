@@ -1,4 +1,10 @@
-# OakRank — Progress
+# OakRate — Progress
+
+The plan runs as **two parallel tracks**. The **Build Track** is phased code work. The **Seed Track** is async manual data entry via the admin app. They progress independently — Build doesn't wait on Seed except at launch.
+
+---
+
+# Build Track
 
 ## Phase 0: Foundation ✅
 
@@ -28,9 +34,9 @@
 - [x] DistanceBadge (formatted distance pill)
 - [x] LeaderboardRow (ranked item row composing ScoreDisplay, TagChip, DistanceBadge)
 
-## Phase 1: Admin + Data Seeding
+## Phase 1: Schema + Admin App ✅
 
-### 1a: Schema Updates
+### 1a: Schema Updates ✅
 
 - [x] Add `categories.featured` column (boolean, default false)
 - [x] Add `profiles.role` column (text, default 'user')
@@ -40,24 +46,9 @@
 - [x] Update rating trigger to new weights (-3, -1, +1, +2)
 - [x] Regenerate types (`npm run gen-types`)
 
-### 1b: Admin Web App (`admin/` — Vite + Vue 3 + PrimeVue)
+### 1b: Admin Web App (`admin/` — Vite + Vue 3 + PrimeVue) ✅
 
-See [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md) for full implementation plan. Progress tracked in [.ai/plans/admin/progress.md](admin/progress.md).
-
-- [ ] Phase A: Scaffold + Auth (Vite, PrimeVue, Supabase client, login, layout)
-- [ ] Phase B: Restaurant CRUD (DataTable, create/edit/delete, Nominatim geocoding)
-- [ ] Phase C: Item CRUD + Batch Entry (rapid-fire, paste mode)
-- [ ] Phase D: Rating Seed + Browse (seed dialog, rating table)
-- [ ] Phase E: Moderation (migration, status toggling, bulk actions)
-- [ ] Phase F: Dashboard (seeding health, gap detection)
-- [ ] Phase G: Deploy (Vercel, admin.oakrank.com)
-
-### 1c: Data Seeding
-
-- [ ] Seed Raleigh restaurants across all 7 featured categories
-- [ ] Seed menu items per restaurant
-- [ ] Seed ratings per item (admin's honest ratings)
-- [ ] Verify leaderboard density (5–10 ranked items per category minimum)
+- [x] Build and deploy admin app — see [.ai/plans/admin/progress.md](admin/progress.md) for phase-level detail. Plan: [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md).
 
 ## Phase 2: Core App — Read Path
 
@@ -105,7 +96,7 @@ See [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md) for f
 
 ### 3c: Score Recalculation
 
-- [ ] Postgres trigger for OakRank score recalculation on rating insert/update/delete
+- [ ] Postgres trigger for OakRate score recalculation on rating insert/update/delete
 
 ### 3d: "Add New" Flows
 
@@ -131,3 +122,14 @@ See [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md) for f
 - [ ] Push notification plumbing (Expo Notifications config)
 - [ ] Data QA (verify seeded data accuracy and category density)
 - [ ] Beta test (TestFlight / internal track)
+
+---
+
+# Seed Track
+
+Manual data entry via the admin app at [admin.oakrate.com](https://admin.oakrate.com). Runs async to Build Track. Required for launch (real-data UX validation, leaderboard density), not for dev iteration — Build Track screens can develop against fixtures.
+
+- [ ] Seed Raleigh restaurants across all 7 featured categories
+- [ ] Seed menu items per restaurant
+- [ ] Seed ratings per item (admin's honest ratings)
+- [ ] Verify leaderboard density (5–10 ranked items per category minimum)

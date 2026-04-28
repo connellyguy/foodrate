@@ -49,3 +49,6 @@ coverage/
 
 *storybook.log
 storybook-static
+
+# Supabase CLI
+supabase/.temp/

@@ -11,7 +11,7 @@
 - [x] Route guard (auth + admin role, awaits ready promise)
 - [x] Placeholder views (Dashboard, Restaurants, Items, Ratings)
 - [x] Type-check + build pass
-- [ ] Verify: login works, layout renders, non-admin blocked
+- [x] Verify: login works, layout renders, non-admin blocked
 
 ## Phase B: Restaurant CRUD ✅
 
@@ -59,9 +59,9 @@
 - [x] `DashboardView.vue` (stats cards, per-category table, restaurants with no items, items with few ratings)
 - [x] `StatsCard.vue` (number + label + optional icon card)
 
-## Phase H: Deploy
+## Phase H: Deploy ✅
 
-- [ ] `vercel.json` SPA rewrite config
-- [ ] Vercel project setup (admin/ subdirectory)
-- [ ] Environment variables in Vercel
-- [ ] `admin.oakrate.com` domain config
+- [x] `vercel.json` SPA rewrite config
+- [x] Vercel project setup (admin/ subdirectory)
+- [x] Environment variables in Vercel
+- [x] `admin.oakrate.com` domain config
