@@ -50,33 +50,59 @@ The plan runs as **two parallel tracks**. The **Build Track** is phased code wor
 
 - [x] Build and deploy admin app — see [.ai/plans/admin/progress.md](admin/progress.md) for phase-level detail. Plan: [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md).
 
-## Phase 2: Core App — Read Path
+## Phase 2: Core App — Read Path (Vertical Slices)
 
-### 2a: Query Layer
+Built as vertical slices — each slice ships one screen end-to-end (hook + components + screen + nav + fallback). See [implementation-plan.md](implementation-plan.md#phase-2-core-app--read-path) for slice descriptions and [query-hooks.md](query-hooks.md) for hook contracts.
 
-- [ ] `useCategories` — featured categories for browse grid
-- [ ] `useLeaderboard(categorySlug)` — ranked items per category per market
-- [ ] `useRestaurant(id)` — restaurant detail with items grouped by category
-- [ ] `useItem(id)` — item detail with sentiment distribution + high-confidence attributes
-- [ ] `useSearch(query)` — Postgres FTS across restaurants and items
-- [ ] `useNearby(location)` — top-rated items near user (PostGIS)
-- [ ] `useHighConfidenceAttributes(itemId)` — frequently-tagged attributes per item
+### Cross-slice setup
 
-### 2b: Remaining Components
+- [ ] Install TanStack Query; configure `QueryClient` per cache strategy in `query-hooks.md`
+- [ ] Mount `QueryClientProvider` at app root
+- [ ] Add `ListResult<T>` and `DetailResult<T, S>` types in `src/lib/queries/types.ts`
 
-- [ ] CategoryCard (browse grid tile)
-- [ ] RestaurantCard (name, distance, top item, score)
-- [ ] ItemCard (item name, restaurant, score, top tags)
-- [ ] SearchInput (autocomplete)
-- [ ] Confidence-redirect pattern (fallback content for sparse data)
+### Slice 1: Category Leaderboard
 
-### 2c: Screens
+- [ ] `useLeaderboard(categorySlug)` — primary + nearby cross-category fallback, merge logic inlined
+- [ ] `FallbackBanner` component (keyed off `fallbackReason`)
+- [ ] Category Leaderboard screen
+- [ ] Temporary dev nav route into the screen (replaced in Slice 2)
+- [ ] Verify: dense category renders primary; sparse category renders fallback
 
-- [ ] Browse (Home) — category grid + "Top Rated Near You"
-- [ ] Category Leaderboard — ranked items, cross-category fallback for sparse categories
-- [ ] Restaurant Detail — items ranked by score, fallback to nearby if no ratings
-- [ ] Item Detail — score, sentiment distribution, high-confidence tags, photos
-- [ ] Search — autocomplete results, trending fallback on no results
+### Slice 2: Browse (Home)
+
+- [ ] `useCategories` — featured categories, `staleTime: Infinity` override
+- [ ] `useNearby(location)` — second `ListResult` hook (PostGIS distance)
+- [ ] Extract `mergeFallback` to `src/lib/queries/mergeFallback.ts`; refactor `useLeaderboard` to use it
+- [ ] `CategoryCard` component
+- [ ] Browse screen — featured category grid + "Top Rated Near You"
+- [ ] Wire nav: Browse tab → Browse → category → Leaderboard; remove temp dev route
+- [ ] Verify: full nav flow + both Browse queries render with and without nearby data
+
+### Slice 3: Item Detail
+
+- [ ] `useItem(id)` — primary + supplementary (restaurant's other rated items when sparse), merge logic inlined
+- [ ] `useHighConfidenceAttributes(itemId)`
+- [ ] `ItemCard` component
+- [ ] Item Detail screen — score, sentiment distribution, high-confidence tags, photos, supplementary section on `confidence === "early"`
+- [ ] Wire nav: leaderboard row → item detail
+- [ ] Verify: high-confidence and "early" items both render correctly
+
+### Slice 4: Restaurant Detail
+
+- [ ] `useRestaurant(id)` — primary + supplementary (top-rated nearby in matching categories) when no rated items
+- [ ] Decide: extract shared `DetailResult` merge helper or keep both detail hooks inlined
+- [ ] `RestaurantCard` component (if needed for supplementary content)
+- [ ] Restaurant Detail screen — info, items by category by score, supplementary path
+- [ ] Wire nav: item detail → restaurant link → Restaurant Detail
+- [ ] Verify: fully-rated and unrated restaurants both render correctly
+
+### Slice 5: Search
+
+- [ ] `useSearch(query)` — FTS across restaurants/items, location-aware ranking, fallback to trending + top categories on zero results (uses extracted `mergeFallback`)
+- [ ] `SearchInput` component
+- [ ] Search screen
+- [ ] Wire nav: Search tab
+- [ ] Verify: hits render; zero-results renders trending fallback with banner
 
 ## Phase 3: Core App — Write Path
 
@@ -117,7 +143,13 @@ The plan runs as **two parallel tracks**. The **Build Track** is phased code wor
 - [ ] App Store assets (icon, screenshots, description)
 - [ ] Privacy policy + terms of service
 - [ ] EAS Submit (iOS + Google Play)
-- [ ] Vercel deployment (Expo web export)
+- [ ] Vercel deployment (Expo web static export)
+- [ ] Link previews — edge meta injection ([link-previews.md](link-previews.md))
+  - [ ] Custom HTML template with placeholder meta tags
+  - [ ] `api/meta.ts` edge function with Supabase resolvers per route pattern
+  - [ ] `vercel.json` rewrite ordering
+  - [ ] `@vercel/og` endpoints for restaurant / item / category cards
+  - [ ] `expo-router/head` usage on detail pages for client-side updates
 - [ ] Analytics (rating events, flow completion, leaderboard views, search queries, redirect events)
 - [ ] Push notification plumbing (Expo Notifications config)
 - [ ] Data QA (verify seeded data accuracy and category density)

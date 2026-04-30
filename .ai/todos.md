@@ -13,3 +13,5 @@ Small items, bugs, and one-off tasks. Not part of the phased implementation plan
 ## Done
 
 <!-- Move completed items here: `- [x] Description (YYYY-MM-DD)` -->
+- [x] Decide per-hook cache strategy for Phase 2a (2026-04-29) — recorded in `.ai/plans/query-hooks.md`
+- [x] Decide shared query primitives for Phase 2a (2026-04-29) — recorded in `.ai/plans/query-hooks.md`

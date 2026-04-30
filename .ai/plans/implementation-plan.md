@@ -69,37 +69,74 @@ Every screen must handle the "not enough data" case by redirecting to something 
 
 This isn't a polish task — it's a core architectural decision. Every query hook and screen needs a fallback data path from day one.
 
-### 2a: Query Layer
+### Build approach: vertical slices
 
-Build the TanStack Query hooks that power all read screens. Each hook returns data shaped for its screen, including fallback content when primary data is sparse.
+Phase 2 is built as **vertical slices**, not horizontal layers. Each slice ships one screen end-to-end — hook(s), components, screen, navigation, and fallback handling — so the read-path patterns (`ListResult`, `DetailResult`, `mergeFallback`, `FallbackBanner`) are validated by real call sites before being committed to.
 
-- **`useCategories`** — featured categories for the browse grid (where `featured = true`)
-- **`useLeaderboard(categorySlug)`** — ranked items within a category for the current market, ordered by OakRate score. Minimum rating threshold for inclusion (e.g., ≥ 3 ratings).
-- **`useRestaurant(id)`** — restaurant detail with its items, grouped by category, ordered by score
-- **`useItem(id)`** — item detail with sentiment distribution, rating count, high-confidence attribute tags
-- **`useSearch(query)`** — Postgres FTS across restaurants and items, location-aware ranking
-- **`useNearby(location)`** — top-rated items near the user across all featured categories (PostGIS distance sort)
-- **`useHighConfidenceAttributes(itemId)`** — attribute tags that appear on ≥ N% of an item's ratings. Only these get displayed on item detail — low-frequency tags are stored but hidden.
+Hook return shapes, fallback rules, cache strategy, and shared-primitive extraction rules are specified in [`.ai/plans/query-hooks.md`](query-hooks.md). That file is the source of truth.
 
-### 2b: Remaining Components
+Loading skeletons and rich error states are *not* required per slice — minimal placeholders are fine during slice work. Phase 4 brings them up to spec across all screens.
 
-Build the components needed for screens that aren't yet built. Existing Storybook components (ScoreDisplay, SentimentDistribution, TagChip, DistanceBadge, LeaderboardRow) cover leaderboard and item detail. Still needed:
+#### Cross-slice setup (do once, before Slice 1)
 
-- **CategoryCard** — browse grid tile (category name, icon, item count)
-- **RestaurantCard** — name, distance, top item preview, score
-- **ItemCard** — item name, restaurant, score, top tags (used in search results, "nearby" lists)
-- **SearchInput** — autocomplete input for restaurants and items
-- **ConfidenceRedirect** — reusable pattern (not necessarily a component) for rendering fallback content when primary data is sparse. Could be a wrapper, a hook, or just a convention — decide during implementation.
+- TanStack Query installed; `QueryClient` configured per the cache strategy in `query-hooks.md` (60s `staleTime`, 5min `gcTime`, `refetchOnWindowFocus: false`); `QueryClientProvider` mounted at the app root.
+- Shared `ListResult<T>` and `DetailResult<T, S>` types added to `src/lib/queries/types.ts`.
 
-Atomic primitives (Button, TextInput, Skeleton, etc.) are built as needed by screens — don't pre-build a full widget library.
+#### Slice 1: Category Leaderboard
 
-### 2c: Screens
+The first end-to-end slice. Validates the `ListResult` shape, the threshold gate, and the fallback-banner pattern.
 
-- **Browse (Home)** — grid of 7 featured category cards, "Top Rated Near You" section (PostGIS), pulls from `useCategories` and `useNearby`
-- **Category Leaderboard** — ranked list of items in a category for Raleigh. No attribute filtering (deferred). If category has few items, supplement with cross-category top items nearby.
-- **Restaurant Detail** — restaurant info, item list grouped by category and ranked by score. If no items are rated, show "Rate something here!" CTA + nearby top-rated items in the same categories.
-- **Item Detail** — OakRate score, sentiment distribution bar, high-confidence attribute tags, photo gallery, rating count. "Early" badge for low rating counts.
-- **Search** — autocomplete across restaurants and items (Postgres FTS). Location-aware result ranking. No-results state shows trending items and top categories, not an empty screen.
+- `useLeaderboard(categorySlug)` — primary query + fallback to top-rated items nearby across all featured categories. Merge logic inlined in the hook (per rule-of-two).
+- `FallbackBanner` component — keyed off `fallbackReason`.
+- Category Leaderboard screen — renders `LeaderboardRow` list, banner when fallback, "Early" badge on sparse-but-present items.
+- Nav wiring: temporary dev entry point (e.g., a hardcoded `/category/pizza` route) — Browse will replace it in Slice 2.
+- Verification: a dense category renders primary; a sparse category renders the fallback path with the banner.
+
+#### Slice 2: Browse (Home)
+
+Brings the user's entry point online and forces the rule-of-two extraction.
+
+- `useCategories` — featured categories. `staleTime: Infinity` override.
+- `useNearby(location)` — second `ListResult` hook.
+- **Extract `mergeFallback` to `src/lib/queries/mergeFallback.ts`** informed by both `useLeaderboard` and `useNearby`. Refactor `useLeaderboard` to use it.
+- `CategoryCard` component.
+- Browse screen — featured category grid + "Top Rated Near You" section.
+- Nav wiring: Browse tab → Browse → tap category → Slice 1's leaderboard. Remove the temporary dev route.
+- Verification: full nav flow works; both Browse queries render correctly with and without nearby data.
+
+#### Slice 3: Item Detail
+
+First `DetailResult` slice. Validates the confidence-labeled detail shape and the supplementary-content pattern.
+
+- `useItem(id)` — primary item + supplementary "restaurant's other rated items" when sparse. Merge logic inlined.
+- `useHighConfidenceAttributes(itemId)` — attribute tags ≥ N% frequency.
+- `ItemCard` component (used in supplementary sections and elsewhere).
+- Item Detail screen — score, sentiment distribution, high-confidence tags, photos, supplementary section when `confidence === "early"`.
+- Nav wiring: leaderboard row → item detail.
+- Verification: a high-confidence item and an "Early" item both render correctly.
+
+#### Slice 4: Restaurant Detail
+
+Second `DetailResult` slice. Triggers a check on whether `DetailResult` warrants its own shared helper.
+
+- `useRestaurant(id)` — primary restaurant with items grouped by category + supplementary "top-rated nearby in the categories this restaurant serves" when no rated items.
+- Decide: extract a shared `DetailResult` merge helper, or keep both detail hooks inlined. Driven by what the two hooks actually share — not assumed.
+- `RestaurantCard` component (if needed for supplementary content; otherwise built later).
+- Restaurant Detail screen — restaurant info, items by category by score, supplementary path when nothing is rated.
+- Nav wiring: item detail → restaurant link → restaurant detail.
+- Verification: a fully-rated restaurant and an unrated restaurant both render correctly.
+
+#### Slice 5: Search
+
+Independent entry point. Third `ListResult` hook — uses the extracted `mergeFallback` as-is.
+
+- `useSearch(query)` — Postgres FTS across restaurants and items, location-aware ranking, swap-fallback to trending items + top categories on zero results.
+- `SearchInput` component.
+- Search screen.
+- Nav wiring: Search tab.
+- Verification: hits render, zero-results renders the trending fallback with banner.
+
+Atomic primitives (Button, TextInput, Skeleton, etc.) are built within the slice that first needs them — no pre-built widget library.
 
 ---
 
