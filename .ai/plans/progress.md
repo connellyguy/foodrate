@@ -18,6 +18,7 @@ The plan runs as **two parallel tracks**. The **Build Track** is phased code wor
 - [x] Expo project scaffold (TypeScript, EAS Build)
 - [x] Shared types pattern (`supabase gen types` → `src/lib/database.types.ts`)
 - [~] CI/CD (EAS Build, linting, type-checking) — lint + typecheck scripts ready, EAS init deferred
+- [ ] Dev-client migration (Expo Go → custom dev build) — plan in [convert-expo-go-to-dev-build.md](convert-expo-go-to-dev-build.md). Scheduled for the Phase 2 → Phase 3 boundary, or sooner if a trigger fires.
 - [x] Environment config (`.env.local` with Supabase URL + anon key)
 - [x] Storybook setup (on-device, `npm run storybook`)
 - [x] Design tokens (`src/constants/theme.ts`) — WCAG AA contrast audit complete

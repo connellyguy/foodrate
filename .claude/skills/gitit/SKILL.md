@@ -61,12 +61,14 @@ Quick interactive commit helper. Stages everything, drafts a message, loops on u
 
 6. **Draft the commit message** — follow the 50/72 rule strictly. Focus on the *why*, not a restatement of the diff.
 
+   **Brevity keyword override:** if the user's invocation args contain a brevity keyword (`short`, `brief`, `quick`, `terse`, `tldr`, or similar), produce a message of **at most 2 lines** of actual content (subject + at most one body line). Skip bullets entirely. The subject alone is preferred; add a single body line only if the *why* truly needs it. When this override is active, ignore the multi-change bullet structure below.
+
    **Format rules:**
    - **Subject line:** ≤ 50 characters. Imperative mood ("add", "fix", "remove" — not "added"/"adds"). No trailing period. No scope prefix unless genuinely useful. Summarize the *purpose* of the change, not the list of files touched.
    - **Blank line** after the subject if a body is present.
    - **Body:** wrap every line at ≤ 72 characters (hard wrap with real newlines — the preview window does not soft-wrap). Use the body only when the subject alone cannot convey the *why*.
 
-   **Single-change commits:** subject line only is ideal. Add a 1–2 sentence body only if the motivation is non-obvious.
+   **Single-change commits:** subject line only is ideal. If the motivation is non-obvious, add **at most one single line** of body — never a multi-line paragraph. Err on the side of subject-only: if you can't fit the *why* in one line, the subject probably isn't precise enough.
 
    **Multi-change commits:** use the "top summary + bullet breakdown" structure:
    ```
@@ -91,6 +93,7 @@ Quick interactive commit helper. Stages everything, drafts a message, loops on u
    - Be succinct. No filler, no restating file paths that are already in the diff, no "this commit...", no marketing language.
    - Never mention Claude, AI, tools, or the drafting process.
    - Never reference tickets, plans, phases, or prior commits.
+   - **Never reference organizational artifacts from plan files, project trackers, or internal docs.** Examples: "QA fix #114", "phase-2 cleanup", "track-polish item 7", "TODO from MIGRATION.md", "addresses checklist row 3". These IDs only mean something to people with the plan file open — to anyone reading `git log` cold (a future maintainer, a `git blame` reader, code-archaeology three years from now), they're noise that points at a moving target. The change must stand on its own in the message: describe what it does and why, in terms that make sense without any external doc. If a fix is also being logged to a plan file, that's an out-of-band side effect of this commit — do not mention it. Same rule for QA-fix numbering, phase numbers, sprint tags, ticket-tracker comment threads, etc.
 
 7. **Present to user via `AskUserQuestion`** — the drafted message is shown via the `preview` field on the "Commit" option, which renders in a persistent monospace panel. Two caveats to plan around:
 
