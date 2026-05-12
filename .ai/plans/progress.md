@@ -18,7 +18,6 @@ The plan runs as **two parallel tracks**. The **Build Track** is phased code wor
 - [x] Expo project scaffold (TypeScript, EAS Build)
 - [x] Shared types pattern (`supabase gen types` → `src/lib/database.types.ts`)
 - [~] CI/CD (EAS Build, linting, type-checking) — lint + typecheck scripts ready, EAS init deferred
-- [ ] Dev-client migration (Expo Go → custom dev build) — plan in [convert-expo-go-to-dev-build.md](convert-expo-go-to-dev-build.md). Scheduled for the Phase 2 → Phase 3 boundary, or sooner if a trigger fires.
 - [x] Environment config (`.env.local` with Supabase URL + anon key)
 - [x] Storybook setup (on-device, `npm run storybook`)
 - [x] Design tokens (`src/constants/theme.ts`) — WCAG AA contrast audit complete
@@ -37,7 +36,7 @@ The plan runs as **two parallel tracks**. The **Build Track** is phased code wor
 
 ## Phase 1: Schema + Admin App ✅
 
-### 1a: Schema Updates ✅
+### 1.1: Schema Updates ✅
 
 - [x] Add `categories.featured` column (boolean, default false)
 - [x] Add `profiles.role` column (text, default 'user')
@@ -47,9 +46,24 @@ The plan runs as **two parallel tracks**. The **Build Track** is phased code wor
 - [x] Update rating trigger to new weights (-3, -1, +1, +2)
 - [x] Regenerate types (`npm run gen-types`)
 
-### 1b: Admin Web App (`admin/` — Vite + Vue 3 + PrimeVue) ✅
+### 1.2: Admin Web App (`admin/` — Vite + Vue 3 + PrimeVue) ✅
 
 - [x] Build and deploy admin app — see [.ai/plans/admin/progress.md](admin/progress.md) for phase-level detail. Plan: [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md).
+
+### 1.3: Data Seeding
+
+Tracked separately under the [Seed Track](#seed-track) below — runs async to the Build Track.
+
+### 1.4: Dev-Client Migration
+
+Active — pauses Phase 2 Slice 1 mid-flight. Procedure detail: [convert-expo-go-to-dev-build.md](convert-expo-go-to-dev-build.md).
+
+- [ ] Install `expo-dev-client` (`npx expo install expo-dev-client`)
+- [ ] Update `start` script to `expo start --dev-client`
+- [ ] First simulator build via `npm run ios` boots and connects to Metro
+- [ ] Personal-team signing configured once in Xcode for physical-device runs
+- [ ] Verify: JS hot-reload, native-rebuild prompt on new native dep, on-device Storybook addons load, Slice 1 `/category/[slug]` still renders
+- [ ] EAS login — deferred until first cloud build is actually needed (not required for Phase 1.4 completion)
 
 ## Phase 2: Core App — Read Path (Vertical Slices)
 

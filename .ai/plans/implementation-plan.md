@@ -20,7 +20,7 @@
 
 **Goal:** Bootstrap the app with enough data to feel useful from day one. Admin-driven, not script-driven.
 
-### 1a: Schema Updates
+### 1.1: Schema Updates
 
 The pivot from 20 broad categories to 7 seeded + open-ended requires a few schema changes:
 
@@ -30,7 +30,7 @@ The pivot from 20 broad categories to 7 seeded + open-ended requires a few schem
 - **`profiles.role` column** (text, default 'user') — supports 'admin' role for owner-only access to the admin page. RLS policy: admin routes check `profiles.role = 'admin'`.
 - **Regenerate types** after migration (`npm run gen-types`)
 
-### 1b: Admin Web App
+### 1.2: Admin Web App
 
 A separate Vite + Vue 3 web app at `admin/` in the monorepo, deployed to `admin.oakrate.com`. The native app contains zero admin code. Full product definition in [docs/ADMIN.md](../docs/ADMIN.md), implementation plan in [.ai/plans/admin/implementation-plan.md](admin/implementation-plan.md).
 
@@ -40,7 +40,7 @@ A separate Vite + Vue 3 web app at `admin/` in the monorepo, deployed to `admin.
 
 **Build order (7 phases A-G):** Scaffold + Auth → Restaurant CRUD → Item CRUD + Batch → Rating Seed → Moderation → Dashboard → Deploy. Seeding can begin after Phase C.
 
-### 1c: Data Seeding
+### 1.3: Data Seeding
 
 With the admin page built, manually seed:
 - Raleigh restaurants covering all 7 featured categories (target: enough restaurants per category that leaderboards show 5–10 ranked items)
@@ -49,6 +49,16 @@ With the admin page built, manually seed:
 - Attribute tags per category (via migration)
 
 **This phase is the critical gate.** The app is useless without data. The admin page makes seeding fast enough to do in a few focused sessions rather than maintaining spreadsheets and import scripts.
+
+---
+
+### 1.4: Dev-Client Migration
+
+**Goal:** Replace Expo Go with a custom dev client before Phase 2 continues.
+
+Originally planned for the Phase 2 → Phase 3 boundary. Promoted because the on-device Storybook addons already in `package.json` are native modules whose continued operation in Expo Go is on borrowed time, and a tooling switch landed mid-Phase-3 (when Apple Sign-In and push plumbing arrive) is more disruptive than landing it now at a clean checkpoint right after Slice 1's first screen shipped.
+
+Full procedure and rationale: [convert-expo-go-to-dev-build.md](convert-expo-go-to-dev-build.md). Slice 1 of Phase 2 is paused mid-flight; resume after the dev client boots end-to-end.
 
 ---
 
@@ -223,12 +233,15 @@ Note: "empty states" as traditionally defined (no data → sad illustration) are
 | Phase | Dependency | Parallelizable with |
 |-------|-----------|-------------------|
 | 0 — Foundation | None | — |
-| 1 — Admin + Seeding | Phase 0 (DB + auth) | Phase 2a (query hooks) |
-| 2 — Read Path | Phase 0 + Phase 1a (schema) | Phase 1c (seeding) |
-| 3 — Write Path (Rating) | Phase 2 (navigation + screens) | Phase 1c (seeding) |
+| 1.1 — Schema Updates | Phase 0 (DB + auth) | — |
+| 1.2 — Admin Web App | Phase 1.1 | Phase 2a (query hooks) |
+| 1.3 — Data Seeding | Phase 1.2 | Phase 1.4 / Phase 2 |
+| 1.4 — Dev-Client Migration | Phase 0 (Expo scaffold) | Phase 1.3 (seeding) |
+| 2 — Read Path | Phase 1.1 + Phase 1.4 | Phase 1.3 (seeding) |
+| 3 — Write Path (Rating) | Phase 2 (navigation + screens) | Phase 1.3 (seeding) |
 | 4 — Profile + Polish | Phase 3 | — |
 | 5 — Launch Prep | Phase 4 | — |
 
-**Critical path: 0 → 1a → 2 → 3 → 4 → 5**, with admin page (1b) and data seeding (1c) running alongside Phase 2 screen work.
+**Critical path: 0 → 1.1 → 1.2 → 1.4 → 2 → 3 → 4 → 5**, with data seeding (1.3) running alongside 1.4 / Phase 2 screen work. Slice 1 of Phase 2 was started before Phase 1.4 was promoted — it's paused mid-flight and resumes once the dev client is verified.
 
 The tightest dependency is between 1a (schema updates) and 2 (query hooks need the `featured` column and seeded categories to develop against). Get the migration done first, then admin page and read screens can proceed in parallel.
